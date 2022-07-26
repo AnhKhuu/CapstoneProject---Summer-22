@@ -6,6 +6,7 @@ function Products() {
     <ul>
       <li>vay</li>
       <li>aoS</li>
+      <li>bbc</li>
     </ul>
   );
 }
