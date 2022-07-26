@@ -1,9 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-// todo:
-// need more product
-// and even more product
 const Header = () => {
   return (
     <nav className="h-28 w-full flex bg-slate-400">
