@@ -22,5 +22,6 @@ module.exports = {
         singleQuote: true,
       },
     ],
+    'react/prop-types': 'off',
   },
 };
