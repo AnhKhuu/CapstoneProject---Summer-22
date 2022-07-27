@@ -23,30 +23,28 @@ function Product({ product }) {
   };
 
   return (
-    <div Id="allproducts">
-      <div className="product-card">
-        <div className="imgBox">
-          <img src={product.pictures} className="img" />
-        </div>
-        <div className="contentBox">
-          <h3>{product.name}</h3>
-          <h2>{product.price}$</h2>
-          <h2>Stock: {product.stock}</h2>
-        </div>
-        <div className="btn-group">
-          <button
-            className="btn-group remove"
-            onClick={(e) => {
-              e.preventDefault();
-              deleteProduct();
-            }}
-          >
-            Remove
-          </button>
-          <button className="btn-group edit" onClick={handleEdit}>
-            Edit
-          </button>
-        </div>
+    <div className="product-card">
+      <div className="imgBox">
+        <img src={product.pictures} className="img" />
+      </div>
+      <div className="contentBox">
+        <h3>{product.name}</h3>
+        <h2>{product.price}$</h2>
+        <h2>Stock: {product.stock}</h2>
+      </div>
+      <div className="btn-group">
+        <button
+          className="btn-group remove"
+          onClick={(e) => {
+            e.preventDefault();
+            deleteProduct();
+          }}
+        >
+          Remove
+        </button>
+        <button className="btn-group edit" onClick={handleEdit}>
+          Edit
+        </button>
       </div>
     </div>
   );
@@ -59,7 +57,7 @@ function AllProducts() {
   if (loading) return <div> Loading... </div>;
   if (error) return <div> Something went wrong </div>;
   return (
-    <div className="products">
+    <div className="all-products" id="all-products">
       {data.products.map((product) => (
         <Product key={product.id} product={product} />
       ))}
