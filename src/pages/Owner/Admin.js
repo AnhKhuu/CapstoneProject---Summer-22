@@ -2,7 +2,7 @@ import React from 'react';
 import MainLayout from '../../layout/MainLayout';
 import { GET_PRODUCT, DELETE_PRODUCT } from '../../graphql/queries';
 import { useMutation, useQuery } from '@apollo/client';
-
+import './Admin.css';
 
 function Product({ product }) {
   const [deleteProduct, { data, loading, error }] = useMutation(
@@ -13,28 +13,43 @@ function Product({ product }) {
   );
   if (loading) return <div> Loading... </div>;
   if (error) return <div> Something went wrong {error.message} </div>;
+  if (data) {
+    // alert(JSON.stringify(data))
+    return;
+  }
+
   const handleEdit = async () => {
     alert('Editing', product.name);
   };
 
   return (
-    <div className="product">
-      <h2>{product.name}</h2>
-      <h3>{product.price}</h3>
-      <h3>{product.stock}</h3>
-      <button
-        onClick={(e) => {
-          e.preventDefault();
-          deleteProduct();
-        }}
-      >
-        Remove
-      </button>
-      <button onClick={handleEdit}>Edit</button>
-      <br />
+    <div Id="allproducts">
+      <div className="product-card">
+        <div className="imgBox">
+          <img src={product.pictures} className="img" />
+        </div>
+        <div className="contentBox">
+          <h3>{product.name}</h3>
+          <h2>{product.price}$</h2>
+          <h2>Stock: {product.stock}</h2>
+        </div>
+        <div className="btn-group">
+          <button
+            className="btn-group remove"
+            onClick={(e) => {
+              e.preventDefault();
+              deleteProduct();
+            }}
+          >
+            Remove
+          </button>
+          <button className="btn-group edit" onClick={handleEdit}>
+            Edit
+          </button>
+        </div>
+      </div>
     </div>
   );
-  // onclick -> route to edit
 }
 
 // get all products
