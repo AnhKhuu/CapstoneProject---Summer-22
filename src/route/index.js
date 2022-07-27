@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
 import Checkout from '../pages/Checkout/Checkout';
 import Admin from '../pages/Owner/Admin';
+import NewProductForm from '../pages/Owner/NewProduct';
 
 import Main from '../pages/Main';
 
@@ -13,6 +14,9 @@ export default function MyRoute() {
       </Routes>
       <Routes>
         <Route exact path="/admin" element={<Admin />}></Route>
+      </Routes>
+      <Routes>
+        <Route exact path="/new_product" element={<NewProductForm />}></Route>
       </Routes>
       <Routes>
         <Route exact path="/" element={<Main />}></Route>

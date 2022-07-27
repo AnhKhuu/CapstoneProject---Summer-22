@@ -1,28 +1,50 @@
-import React from "react";
-import { render } from "react-dom";
-import { Formik } from "formik";
+import React, { useState } from 'react';
+import './helper.css';
+import { render } from 'react-dom';
+import { Formik } from 'formik';
+import { ADD_PRODUCT } from '../../graphql/mutations';
+import { useMutation } from '@apollo/client';
 
-const Addnew = () => (
+const NewProductForm = () => {
+  // const [addProduct, { data, loading, error }] = useMutation(ADD_PRODUCT, {
+  //   variables: { removeProductId: product.id },
+  // });
+
+  const [addProduct, { data, loading, error }] = useMutation(ADD_PRODUCT, {
+    variables: {},
+  });
+
+  return (
     <Formik
-      initialValues={{ name: "", price: 0 }}
-      onSubmit={async (products) => {
-        await new Promise((resolve) => setTimeout(resolve, 500));
-        alert(JSON.stringify(products));
+      initialValues={{
+        name: 'vay',
+        price: 123,
+        stock: 23,
+        colors: [{ name: 'red', hexValue: '1234' }],
+        categories: '',
+        pictures: '',
+        sizes: '',
+        description: '',
+      }}
+      onSubmit={async (product) => {
+        // console.log(product);
+        addProduct({
+          variables: {
+            product: {
+              ...product,
+              categories: product.categories.split(','),
+              pictures: [product.pictures],
+              sizes: [product.sizes],
+            },
+          },
+        });
       }}
     >
       {(props) => {
-        const {
-          values,
-          dirty,
-          isSubmitting,
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          handleReset
-        } = props;
+        const { values, isSubmitting, handleChange, handleSubmit } = props;
         return (
           <form onSubmit={handleSubmit}>
-            <label htmlFor="name" style={{ display: "block" }}>
+            <label htmlFor="name" style={{ display: 'block' }}>
               Name
             </label>
             <input
@@ -31,10 +53,9 @@ const Addnew = () => (
               type="text"
               value={values.name}
               onChange={handleChange}
-              onBlur={handleBlur}
               className="text-input"
             />
-            <label htmlFor="price" style={{ display: "block" }}>
+            <label htmlFor="price" style={{ display: 'block' }}>
               Price
             </label>
             <input
@@ -42,24 +63,81 @@ const Addnew = () => (
               type="number"
               value={values.price}
               onChange={handleChange}
-              onBlur={handleBlur}
               className="text-input"
             />
-
-            <button
-              type="button"
-              className="outline"
-              onClick={handleReset}
-              disabled={!dirty || isSubmitting}
-            >
-              Reset
-            </button>
+            <label htmlFor="stock" style={{ display: 'block' }}>
+              Stock
+            </label>
+            <input
+              id="stock"
+              type="number"
+              value={values.stock}
+              onChange={handleChange}
+              className="text-input"
+            />
+            {/* <label htmlFor="color" style={{ display: 'block' }}>
+              Color
+            </label>
+            <input
+              id="color"
+              placeholder="color"
+              type="text"
+              value={values.colors}
+              onChange={handleChange}
+              className="text-input"
+            /> */}
+            <label htmlFor="description" style={{ display: 'block' }}>
+              Description
+            </label>
+            <input
+              id="description"
+              placeholder=""
+              type="text"
+              value={values.description}
+              onChange={handleChange}
+              className="text-input"
+            />
+            <label htmlFor="categories" style={{ display: 'block' }}>
+              Catergories
+            </label>
+            <input
+              id="categories"
+              placeholder="categories, separated by semicolon"
+              type="text"
+              value={values.categories}
+              onChange={handleChange}
+              className="text-input"
+            />
+            <label htmlFor="pictures" style={{ display: 'block' }}>
+              Picture
+            </label>
+            <input
+              id="pictures"
+              placeholder="picture"
+              type="text"
+              value={values.pictures}
+              onChange={handleChange}
+              className="text-input"
+            />
+            <label htmlFor="sizes" style={{ display: 'block' }}>
+              Size
+            </label>
+            <input
+              id="sizes"
+              placeholder="size"
+              type="text"
+              value={values.sizes}
+              onChange={handleChange}
+              className="text-input"
+            />
             <button type="submit" disabled={isSubmitting}>
               Submit
             </button>
-
-            <DisplayFormikState {...props} />
           </form>
         );
       }}
     </Formik>
+  );
+};
+
+export default NewProductForm;

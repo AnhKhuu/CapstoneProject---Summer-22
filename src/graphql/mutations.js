@@ -8,4 +8,12 @@ const ADD_PRODUCT = gql`
   }
 `;
 
-export { ADD_PRODUCT };
+const DELETE_PRODUCT = gql`
+  mutation RemoveProduct($removeProductId: ID!) {
+    removeProduct(id: $removeProductId) {
+      id
+    }
+  }
+`;
+
+export { ADD_PRODUCT, DELETE_PRODUCT };

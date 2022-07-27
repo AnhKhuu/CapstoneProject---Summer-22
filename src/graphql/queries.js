@@ -16,13 +16,5 @@ const GET_PRODUCT = gql`
   }
 `;
 
-const DELETE_PRODUCT = gql`
-  mutation RemoveProduct($removeProductId: ID!) {
-    removeProduct(id: $removeProductId) {
-      id
-    }
-  }
-`;
 
-export { GET_PRODUCT, DELETE_PRODUCT };
-// export default GET_PRODUCT;
+export { GET_PRODUCT };

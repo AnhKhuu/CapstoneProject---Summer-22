@@ -1,6 +1,7 @@
 import React from 'react';
 import MainLayout from '../../layout/MainLayout';
-import { GET_PRODUCT, DELETE_PRODUCT } from '../../graphql/queries';
+import { GET_PRODUCT } from '../../graphql/queries';
+import { DELETE_PRODUCT } from '../../graphql/mutations';
 import { useMutation, useQuery } from '@apollo/client';
 import './Admin.css';
 
