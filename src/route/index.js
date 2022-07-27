@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
 import Checkout from '../pages/Checkout/Checkout';
-import Admin from '../pages/Admin';
+import Admin from '../pages/Owner/Admin';
 
 import Main from '../pages/Main';
 
