@@ -1,12 +1,16 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
-import Homepage from '../pages/Homepage';
+import Checkout from '../pages/Checkout/Checkout';
+import Main from '../pages/Main';
 
 export default function MyRoute() {
   return (
     <Router>
       <Routes>
-        <Route exact path="/" element={<Homepage />}></Route>
+        <Route exact path="/checkout" element={<Checkout />}></Route>
+      </Routes>
+      <Routes>
+        <Route exact path="/" element={<Main />}></Route>
       </Routes>
     </Router>
   );
