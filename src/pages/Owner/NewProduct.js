@@ -4,7 +4,7 @@ import { Formik, yupToFormErrors } from 'formik';
 import * as yup from 'yup';
 import { ADD_PRODUCT } from '../../graphql/mutations';
 import { useMutation } from '@apollo/client';
-import { TwitterPicker, GithubPicker } from 'react-color';
+import { GithubPicker } from 'react-color';
 
 const defaultColors = {
   '#111011': 'Black',
