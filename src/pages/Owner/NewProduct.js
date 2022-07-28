@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './form.css';
 import { Formik, yupToFormErrors } from 'formik';
 import * as yup from 'yup';
 import { ADD_PRODUCT } from '../../graphql/mutations';
 import { useMutation } from '@apollo/client';
-import { GithubPicker } from 'react-color';
+import { TwitterPicker, GithubPicker } from 'react-color';
 
 const defaultColors = {
   '#111011': 'Black',
@@ -52,12 +52,20 @@ const Schema = yup.object({
   colors: yup.string().required('Color is required'),
   description: yup.string().min(2, 'Too short').max(1000, 'Too long'),
   catergories: yup.string(),
+  pictures: yup
+    .string()
+    .matches(
+      /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
+      'Enter correct URL'
+    ),
+  sizes: yup.string(),
 });
+
 const NewProductForm = () => {
   const [addProduct, _] = useMutation(ADD_PRODUCT, {
     variables: {},
   });
-
+  const [colour, setColour] = useState('');
   return (
     <Formik
       initialValues={{
@@ -128,8 +136,8 @@ const NewProductForm = () => {
               onChange={handleChange}
               className="text-input"
             />
-            {errors.name && touched.name ? (
-              <div className="error-msg">{errors.name}</div>
+            {errors.price && touched.price ? (
+              <div className="error-msg">{errors.price}</div>
             ) : null}
             <label htmlFor="stock" style={{ display: 'block' }}>
               Stock
@@ -142,8 +150,8 @@ const NewProductForm = () => {
               onChange={handleChange}
               className="text-input"
             />
-            {errors.name && touched.name ? (
-              <div className="error-msg">{errors.name}</div>
+            {errors.stock && touched.stock ? (
+              <div className="error-msg">{errors.stock}</div>
             ) : null}
             <label htmlFor="color" style={{ display: 'block' }}>
               Color
@@ -151,12 +159,20 @@ const NewProductForm = () => {
             <GithubPicker
               onChange={(color, _e) => {
                 values.colors = color.hex;
-                console.log(values);
+                setColour(color.hex);
               }}
               colors={Object.keys(defaultColors)}
             />
-            {errors.name && touched.name ? (
-              <div className="error-msg">{errors.name}</div>
+            <input
+              id="colors"
+              placeholder="Pick a color"
+              type="text"
+              value={defaultColors[colour]}
+              // onChange={handleChange}
+              className="text-input"
+            />
+            {errors.colors && touched.colors ? (
+              <div className="error-msg">{errors.colors}</div>
             ) : null}
             <label htmlFor="description" style={{ display: 'block' }}>
               Description
@@ -169,8 +185,8 @@ const NewProductForm = () => {
               onChange={handleChange}
               className="text-input"
             />
-            {errors.name && touched.name ? (
-              <div className="error-msg">{errors.name}</div>
+            {errors.description && touched.description ? (
+              <div className="error-msg">{errors.description}</div>
             ) : null}
             <label htmlFor="categories" style={{ display: 'block' }}>
               Catergories
@@ -183,8 +199,8 @@ const NewProductForm = () => {
               onChange={handleChange}
               className="text-input"
             />
-            {errors.name && touched.name ? (
-              <div className="error-msg">{errors.name}</div>
+            {errors.categories && touched.categories ? (
+              <div className="error-msg">{errors.categories}</div>
             ) : null}
             <label htmlFor="pictures" style={{ display: 'block' }}>
               Picture
@@ -197,8 +213,8 @@ const NewProductForm = () => {
               onChange={handleChange}
               className="text-input"
             />
-            {errors.name && touched.name ? (
-              <div className="error-msg">{errors.name}</div>
+            {errors.pictures && touched.pictures ? (
+              <div className="error-msg">{errors.pictures}</div>
             ) : null}
             <label htmlFor="sizes" style={{ display: 'block' }}>
               Size
@@ -211,8 +227,8 @@ const NewProductForm = () => {
               onChange={handleChange}
               className="text-input"
             />
-            {errors.name && touched.name ? (
-              <div className="error-msg">{errors.name}</div>
+            {errors.sizes && touched.sizes ? (
+              <div className="error-msg">{errors.sizes}</div>
             ) : null}
             <button type="submit" disabled={isSubmitting}>
               Submit

@@ -42,8 +42,13 @@ input:focus {
   border-bottom: 5px solid #ffa580;
 }
 .error-msg {
-  margin-top: 1rem;
+  margin-top: -2rem;
   color: red;
+  font-weight: bold;
+  font-style: italic;
+}
+label {
+  font-size: 1.5rem ;
 }
 
 button {
