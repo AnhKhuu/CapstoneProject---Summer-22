@@ -41,6 +41,10 @@ input {
 input:focus {
   border-bottom: 5px solid #ffa580;
 }
+.error-msg {
+  margin-top: 1rem;
+  color: red;
+}
 
 button {
   display: block;
