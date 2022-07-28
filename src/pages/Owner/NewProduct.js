@@ -1,15 +1,34 @@
-import React, { useState } from 'react';
-import './helper.css';
+import React from 'react';
+import './form.css';
 import { render } from 'react-dom';
-import { Formik } from 'formik';
+import { Formik, Field } from 'formik';
+import * as yup from 'yup';
 import { ADD_PRODUCT } from '../../graphql/mutations';
 import { useMutation } from '@apollo/client';
 
+const Schema = yup.object().shape({
+  name: yup
+    .string()
+    .min(2, 'Too short')
+    .max(144, 'Too long')
+    .required('Required'),
+  price: yup
+    .number('Must be a number')
+    .positive('Must be positive')
+    .integer('Must be integer')
+    .required('Required'),
+  stock: yup
+    .number('Must be a number')
+    .positive('Must be positive')
+    .integer('Must be integer')
+    .required('Required'),
+  description: yup.string().min(2, 'Too short').max(1000, 'Too long'),
+  catergories: yup.string(),
+});
 const NewProductForm = () => {
   // const [addProduct, { data, loading, error }] = useMutation(ADD_PRODUCT, {
   //   variables: { removeProductId: product.id },
   // });
-
   const [addProduct, { data, loading, error }] = useMutation(ADD_PRODUCT, {
     variables: {},
   });
@@ -17,22 +36,25 @@ const NewProductForm = () => {
   return (
     <Formik
       initialValues={{
-        name: 'vay',
-        price: 123,
-        stock: 23,
+        name: '',
+        price: '',
+        stock: '',
         colors: [{ name: 'red', hexValue: '1234' }],
         categories: '',
         pictures: '',
         sizes: '',
         description: '',
       }}
+      validationSchema={Schema}
       onSubmit={async (product) => {
         // console.log(product);
         addProduct({
           variables: {
             product: {
               ...product,
-              categories: product.categories.split(','),
+              price: product.price,
+              stock: product.stock,
+              categories: product.categories.split('; '),
               pictures: [product.pictures],
               sizes: [product.sizes],
             },
@@ -43,7 +65,7 @@ const NewProductForm = () => {
       {(props) => {
         const { values, isSubmitting, handleChange, handleSubmit } = props;
         return (
-          <form onSubmit={handleSubmit}>
+          <form className="add-new" onSubmit={handleSubmit}>
             <label htmlFor="name" style={{ display: 'block' }}>
               Name
             </label>
@@ -60,6 +82,7 @@ const NewProductForm = () => {
             </label>
             <input
               id="price"
+              placeholder="Enter price ($)"
               type="number"
               value={values.price}
               onChange={handleChange}
@@ -70,6 +93,7 @@ const NewProductForm = () => {
             </label>
             <input
               id="stock"
+              placeholder="Enter stock"
               type="number"
               value={values.stock}
               onChange={handleChange}
@@ -91,7 +115,7 @@ const NewProductForm = () => {
             </label>
             <input
               id="description"
-              placeholder=""
+              placeholder="Enter short description"
               type="text"
               value={values.description}
               onChange={handleChange}
@@ -102,7 +126,7 @@ const NewProductForm = () => {
             </label>
             <input
               id="categories"
-              placeholder="categories, separated by semicolon"
+              placeholder="Enter Categories, separated by semicolon"
               type="text"
               value={values.categories}
               onChange={handleChange}
@@ -113,7 +137,7 @@ const NewProductForm = () => {
             </label>
             <input
               id="pictures"
-              placeholder="picture"
+              placeholder="Enter picture URL"
               type="text"
               value={values.pictures}
               onChange={handleChange}
@@ -124,7 +148,7 @@ const NewProductForm = () => {
             </label>
             <input
               id="sizes"
-              placeholder="size"
+              placeholder="Enter size"
               type="text"
               value={values.sizes}
               onChange={handleChange}

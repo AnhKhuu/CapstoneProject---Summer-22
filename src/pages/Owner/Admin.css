@@ -1,14 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Istok+Web:wght@400;700&display=swap");
 
-* {
-  margin: 0;
-  padding: 0;
-  font-family: "Istok Web", sans-serif;
-}
-body {
-  margin: 0;
-  align-items: center;
-}
 #all-products {
   display: flex;
   flex-wrap: wrap;
@@ -21,7 +12,7 @@ body {
   position: relative;
   width: 320px;
   height: auto;
-  background: #191919;
+  background-color: #ffa481;
   border-radius: 20px;
   overflow: hidden;
   margin-top: 1rem;
@@ -34,7 +25,7 @@ body {
   top: -50%;
   width: 100%;
   height: 100%;
-  background: #ffce00;
+  background-color: #f8f4e5;
   transform: skewY(345deg);
   transition: 0.5s;
 }
@@ -75,7 +66,7 @@ body {
 .product-card .contentBox h3 {
   text-align: center;
   font-size: 18px;
-  color: white;
+  color: #747574;
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -83,7 +74,7 @@ body {
 
 .product-card .contentBox h2 {
   font-size: 24px;
-  color: white;
+  color: black;
   font-weight: 700;
   letter-spacing: 1px;
 }
@@ -96,37 +87,7 @@ body {
 .btn-group {
   display: flex;
   align-items: space-around;
-  margin: 1rem 1rem 1rem 2.7rem;
-}
-
-.remove {
-  text-decoration: none;
-  color: #fff;
-  cursor: pointer;
-  border: 3px solid;
-  padding: 0.25em 0.5em;
-  box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px, 5px 5px 0px 0px;
-  padding: 5px 20px;
-  border-radius: 5px;
-  margin: 0.5rem;
-  cursor: pointer;
-}
-.edit {
-  text-decoration: none;
-  color: #fff;
-  cursor: pointer;
-  border: 3px solid;
-  padding: 0.25em 0.5em;
-  box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px, 5px 5px 0px 0px;
-  padding: 5px 20px;
-  border-radius: 5px;
-  margin: 0.5rem;
-  cursor: pointer;
-}
-.remove:hover {
-  filter:brightness(50%)
-}
-.edit:hover {
-  filter:brightness(50%)
+  margin: 1rem 1rem 1rem 1.3rem;
+  background:#ffa481 ;
 }
 
