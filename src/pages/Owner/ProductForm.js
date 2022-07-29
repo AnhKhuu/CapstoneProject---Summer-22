@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import './form.css';
 import { Formik, yupToFormErrors } from 'formik';
 import * as yup from 'yup';
-import { ADD_PRODUCT } from '../../graphql/mutations';
-import { useMutation } from '@apollo/client';
+import { ADD_PRODUCT, EDIT_PRODUCT } from '../../graphql/mutations';
+import { useMutation, useQuery } from '@apollo/client';
 import { GithubPicker } from 'react-color';
+import { GET_PRODUCT } from '../../graphql/queries';
+import { useParams } from 'react-router-dom';
 
 const defaultColors = {
   '#111011': 'Black',
@@ -29,9 +30,18 @@ const defaultColors = {
   '#575634': 'Moss Green',
   '#403a3b': 'Charcoal Heather',
 };
-
 // const colorHex = Object.keys(defaultColors);
 // const colorName = Object.values(defaultColors);
+
+const normalizeData = (product) => {
+  return {
+    ...product,
+    colors: product.colors[0].hexValue,
+    pictures: product.pictures[0],
+    sizes: product.sizes.join(','),
+    categories: JSON.stringify(product.categories),
+  };
+};
 
 const Schema = yup.object({
   name: yup
@@ -61,14 +71,24 @@ const Schema = yup.object({
   sizes: yup.string(),
 });
 
-const NewProductForm = () => {
-  const [addProduct, _] = useMutation(ADD_PRODUCT, {
+const ProductForm = () => {
+  const [addProduct, { data, loading, errors }] = useMutation(ADD_PRODUCT, {
+    variables: {},
+  });
+  const [editProduct] = useMutation(EDIT_PRODUCT, {
     variables: {},
   });
   const [colour, setColour] = useState('');
-  return (
-    <Formik
-      initialValues={{
+  const { pid } = useParams();
+
+  const res = useQuery(GET_PRODUCT, { variables: { productId: pid } });
+  if (res.loading) return <div> Loading... </div>;
+  if (res.error) return <div> Something went wrong </div>;
+  // console.log(res.data);
+  const method = pid ? 'edit' : 'new';
+  const initValue = res.data.product
+    ? normalizeData(res.data.product)
+    : {
         name: '',
         price: '',
         stock: '',
@@ -77,27 +97,33 @@ const NewProductForm = () => {
         pictures: '',
         sizes: '',
         description: '',
-      }}
+      };
+
+  return (
+    <Formik
+      initialValues={initValue}
       validationSchema={Schema}
       onSubmit={async (product) => {
-        addProduct({
-          variables: {
-            product: {
-              ...product,
-              price: product.price,
-              stock: product.stock,
-              categories: product.categories.split('; '),
-              pictures: [product.pictures],
-              sizes: [product.sizes],
-              colors: [
-                {
-                  name: defaultColors[product.colors],
-                  hexValue: product.colors,
-                },
-              ],
-            },
+        const variables = {
+          product: {
+            ...product,
+            price: product.price,
+            stock: product.stock,
+            categories: product.categories.split(';'),
+            pictures: [product.pictures],
+            sizes: [product.sizes],
+            colors: [
+              {
+                name: defaultColors[product.colors],
+                hexValue: product.colors,
+              },
+            ],
           },
-        });
+        };
+        if (method === 'edit') editProduct({ variables });
+        else addProduct({ variables });
+        if (errors) console.log(errors);
+        if (data) console.log(data);
       }}
     >
       {(props) => {
@@ -240,4 +266,4 @@ const NewProductForm = () => {
   );
 };
 
-export default NewProductForm;
+export default ProductForm;

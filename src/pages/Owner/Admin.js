@@ -1,9 +1,10 @@
 import React from 'react';
 import MainLayout from '../../layout/MainLayout';
-import { GET_PRODUCT } from '../../graphql/queries';
-import { DELETE_PRODUCT } from '../../graphql/mutations';
+import { GET_PRODUCTS } from '../../graphql/queries';
+import { DELETE_PRODUCT, EDIT_PRODUCT } from '../../graphql/mutations';
 import { useMutation, useQuery } from '@apollo/client';
-import './Admin.css';
+import { Link } from 'react-router-dom';
+import ProductForm from './ProductForm';
 
 function Product({ product }) {
   const [deleteProduct, { data, loading, error }] = useMutation(
@@ -19,9 +20,7 @@ function Product({ product }) {
     return;
   }
 
-  const handleEdit = async () => {
-    alert('Editing', product.name);
-  };
+  const handleEdit = async () => {};
 
   return (
     <div className="product-card">
@@ -43,9 +42,9 @@ function Product({ product }) {
         >
           Remove
         </button>
-        <button className="btn-group edit" onClick={handleEdit}>
-          Edit
-        </button>
+        <Link to={`/edit_product/${product.id}`}>
+          <button type="button">Edit</button>
+        </Link>
       </div>
     </div>
   );
@@ -53,15 +52,17 @@ function Product({ product }) {
 
 // get all products
 function AllProducts() {
-  const { error, data, loading } = useQuery(GET_PRODUCT);
+  const { error, data, loading } = useQuery(GET_PRODUCTS);
   console.log({ error, data, loading });
   if (loading) return <div> Loading... </div>;
   if (error) return <div> Something went wrong </div>;
   return (
-    <div className="all-products" id="all-products">
-      {data.products.map((product) => (
-        <Product key={product.id} product={product} />
-      ))}
+    <div>
+      <div className="all-products" id="all-products">
+        {data.products.map((product) => (
+          <Product key={product.id} product={product} />
+        ))}
+      </div>
     </div>
   );
 }
