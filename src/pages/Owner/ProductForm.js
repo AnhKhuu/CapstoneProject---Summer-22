@@ -5,7 +5,7 @@ import { ADD_PRODUCT, EDIT_PRODUCT } from '../../graphql/mutations';
 import { useMutation, useQuery } from '@apollo/client';
 import { GithubPicker } from 'react-color';
 import { GET_PRODUCT } from '../../graphql/queries';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const defaultColors = {
   '#111011': 'Black',
@@ -30,8 +30,6 @@ const defaultColors = {
   '#575634': 'Moss Green',
   '#403a3b': 'Charcoal Heather',
 };
-// const colorHex = Object.keys(defaultColors);
-// const colorName = Object.values(defaultColors);
 
 const normalizeData = (product) => {
   return {
@@ -84,7 +82,7 @@ const ProductForm = () => {
   });
   const [colour, setColour] = useState('');
   const { pid } = useParams();
-
+  const navigate = useNavigate();
   const res = useQuery(GET_PRODUCT, { variables: { productId: pid } });
   if (res.loading) return <div> Loading... </div>;
   if (res.error) return <div> Something went wrong </div>;
@@ -106,7 +104,8 @@ const ProductForm = () => {
     <Formik
       initialValues={initValue}
       validationSchema={Schema}
-      onSubmit={async (product) => {
+      onSubmit={async (product, e) => {
+        e.preventDefault = true;
         const variables = {
           product: {
             ...product,
@@ -123,10 +122,9 @@ const ProductForm = () => {
             ],
           },
         };
-        if (method === 'edit') editProduct({ variables });
-        else addProduct({ variables });
-        if (errors) console.log(errors);
-        if (data) console.log(data);
+        if (method === 'edit') await editProduct({ variables });
+        else await addProduct({ variables });
+        navigate('/admin', { replace: true });
       }}
     >
       {(props) => {
@@ -196,7 +194,7 @@ const ProductForm = () => {
               id="colors"
               placeholder="Pick a color"
               type="text"
-              value={defaultColors[colour]}
+              value={defaultColors[colour === '' ? initValue.colors : colour]}
               className="text-input"
             />
             {errors.colors && touched.colors ? (
