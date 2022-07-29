@@ -1,7 +1,7 @@
 import Router from './route';
 import React from 'react';
 import './App.css';
-import {
+/*import {
   ApolloClient,
   InMemoryCache,
   ApolloProvider,
@@ -11,14 +11,16 @@ import {
 const client = new ApolloClient({
   uri: 'http://localhost:4000/graphql',
   cache: new InMemoryCache(),
-});
+});*/
 
-function App() {
+const App = () => {
   return (
-    <ApolloProvider client={client}>
+    /*<ApolloProvider client={client}>
       <Router />
-    </ApolloProvider>
+    </ApolloProvider>*/
+    <div>
+      <h1 className="text-3xl font-bold underline">Hello world!</h1>
+    </div>
   );
-}
-
+};
 export default App;
