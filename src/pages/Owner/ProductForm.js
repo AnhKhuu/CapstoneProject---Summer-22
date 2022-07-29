@@ -35,11 +35,15 @@ const defaultColors = {
 
 const normalizeData = (product) => {
   return {
-    ...product,
+    id: product.id,
     colors: product.colors[0].hexValue,
     pictures: product.pictures[0],
     sizes: product.sizes.join(','),
-    categories: JSON.stringify(product.categories),
+    categories: product.categories.join(','),
+    price: product.price,
+    stock: product.stock,
+    name: product.name,
+    description: product.description,
   };
 };
 
@@ -84,7 +88,6 @@ const ProductForm = () => {
   const res = useQuery(GET_PRODUCT, { variables: { productId: pid } });
   if (res.loading) return <div> Loading... </div>;
   if (res.error) return <div> Something went wrong </div>;
-  // console.log(res.data);
   const method = pid ? 'edit' : 'new';
   const initValue = res.data.product
     ? normalizeData(res.data.product)
@@ -194,7 +197,6 @@ const ProductForm = () => {
               placeholder="Pick a color"
               type="text"
               value={defaultColors[colour]}
-              // onChange={handleChange}
               className="text-input"
             />
             {errors.colors && touched.colors ? (
