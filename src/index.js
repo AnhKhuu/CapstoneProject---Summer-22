@@ -8,6 +8,7 @@ import {
   ApolloProvider,
   gql,
 } from '@apollo/client';
+import Provider from './store/Provider';
 
 const client = new ApolloClient({
   uri: 'https://flyby-gateway.herokuapp.com/',
@@ -17,6 +18,8 @@ const client = new ApolloClient({
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <ApolloProvider client={client}>
-    <App />
+    <Provider>
+      <App />
+    </Provider>
   </ApolloProvider>
 );
