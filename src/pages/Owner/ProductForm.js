@@ -32,7 +32,7 @@ const defaultColors = {
 };
 
 const normalizeData = (product) => {
-  const colors = product.colors.map((c) => c.name);
+  const colors = product.colors.map((c) => c.hexValue).join(',');
   return {
     id: product.id,
     colors,
@@ -106,6 +106,14 @@ const ProductForm = () => {
       validationSchema={Schema}
       onSubmit={async (product, e) => {
         e.preventDefault = true;
+        const colors = product.colors
+          .split(',')
+          .map((c) => ({
+            name: defaultColors[c],
+            hexValue: c,
+          }))
+          .filter(c => c.name && c.hexValue);
+        console.log(colors);
         const variables = {
           product: {
             ...product,
@@ -114,12 +122,7 @@ const ProductForm = () => {
             categories: product.categories.split(';'),
             pictures: [product.pictures],
             sizes: [product.sizes],
-            colors: [
-              {
-                name: defaultColors[product.colors],
-                hexValue: product.colors,
-              },
-            ],
+            colors: colors,
           },
         };
         if (method === 'edit') await editProduct({ variables });
@@ -186,8 +189,9 @@ const ProductForm = () => {
             <GithubPicker
               onChange={(color, _e) => {
                 values.colors = color.hex;
-                if (!colour) setColour(defaultColors[initValue.colors]);
-                setColour(`${colour},${defaultColors[color.hex]}`);
+                if (!colour) setColour(initValue.colors);
+                setColour(`${colour},${color.hex}`);
+                values.colors = colour;
               }}
               colors={Object.keys(defaultColors)}
             />
@@ -196,9 +200,11 @@ const ProductForm = () => {
               placeholder="Pick a color"
               type="text"
               value={
-                colour === '' ? initValue.colors : initValue.colors + colour
+                // colour === '' ? initValue.colors : initValue.colors + colour
+                values.colors
               }
               className="text-input"
+              onChange={handleChange}
             />
             {errors.colors && touched.colors ? (
               <div className="error-msg">{errors.colors}</div>
