@@ -32,9 +32,10 @@ const defaultColors = {
 };
 
 const normalizeData = (product) => {
+  const colors = product.colors.map((c) => c.name);
   return {
     id: product.id,
-    colors: product.colors[0].hexValue,
+    colors,
     pictures: product.pictures[0],
     sizes: product.sizes.join(','),
     categories: product.categories.join(','),
@@ -99,7 +100,6 @@ const ProductForm = () => {
         sizes: '',
         description: '',
       };
-
   return (
     <Formik
       initialValues={initValue}
@@ -186,7 +186,8 @@ const ProductForm = () => {
             <GithubPicker
               onChange={(color, _e) => {
                 values.colors = color.hex;
-                setColour(color.hex);
+                if (!colour) setColour(defaultColors[initValue.colors]);
+                setColour(`${colour},${defaultColors[color.hex]}`);
               }}
               colors={Object.keys(defaultColors)}
             />
@@ -194,7 +195,9 @@ const ProductForm = () => {
               id="colors"
               placeholder="Pick a color"
               type="text"
-              value={defaultColors[colour === '' ? initValue.colors : colour]}
+              value={
+                colour === '' ? initValue.colors : initValue.colors + colour
+              }
               className="text-input"
             />
             {errors.colors && touched.colors ? (
