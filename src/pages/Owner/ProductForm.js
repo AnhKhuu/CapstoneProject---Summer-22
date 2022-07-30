@@ -7,7 +7,7 @@ import { GithubPicker } from 'react-color';
 import { GET_PRODUCT } from '../../graphql/queries';
 import { useParams, useNavigate } from 'react-router-dom';
 
-const defaultColors = {
+const hexToName = {
   '#111011': 'Black',
   '#016541': 'Green',
   '#ffce6f': 'Yellow',
@@ -31,8 +31,33 @@ const defaultColors = {
   '#403a3b': 'Charcoal Heather',
 };
 
+const nameToHex = {
+  Black: '#111011',
+  Green: '#016541',
+  Yellow: '#ffce6f',
+  White: '#fbfbfa',
+  'Heather Grey': '#b0b3b6',
+  'Denim Heather': '#263037',
+  Navy: '#312f3f',
+  Blue: '#353d77',
+  Creme: '#e4d6c5',
+  'Light Blue': '#9cc0d5',
+  Red: '#dd2020',
+  'Dark Grey': '#5e504c',
+  Kiwi: '#a0c640',
+  Army: '#413d33',
+  'Forest Green': '#13290c',
+  'Light Pink': '#fec6ca',
+  Purple: '#541e69',
+  'Dark Red': '#581f33',
+  Gold: '#f89e2a',
+  'Moss Green': '#575634',
+  'Charcoal Heather': '#403a3b',
+};
+
 const normalizeData = (product) => {
-  const colors = product.colors.map((c) => c.hexValue).join(',');
+  const colors = product.colors.map((c) => c.name).join(',');
+  console.log(colors);
   return {
     id: product.id,
     colors,
@@ -43,6 +68,8 @@ const normalizeData = (product) => {
     stock: product.stock,
     name: product.name,
     description: product.description,
+    featuringFrom: product.featuringFrom,
+    featuringFrom: product.featuringTo,
   };
 };
 
@@ -84,9 +111,8 @@ const ProductForm = () => {
   const [colour, setColour] = useState('');
   const { pid } = useParams();
   const navigate = useNavigate();
-  const res = useQuery(GET_PRODUCT, { variables: { productId: pid } });
+  const res = useQuery(GET_PRODUCT, { variables: { productId: pid || '' } });
   if (res.loading) return <div> Loading... </div>;
-  if (res.error) return <div> Something went wrong </div>;
   const method = pid ? 'edit' : 'new';
   const initValue = res.data.product
     ? normalizeData(res.data.product)
@@ -99,6 +125,8 @@ const ProductForm = () => {
         pictures: '',
         sizes: '',
         description: '',
+        featuringFrom: '',
+        featuringFrom: '',
       };
   return (
     <Formik
@@ -106,14 +134,13 @@ const ProductForm = () => {
       validationSchema={Schema}
       onSubmit={async (product, e) => {
         e.preventDefault = true;
-        const colors = product.colors
+        const colors = (colour === '' ? initValue.colors : colour)
           .split(',')
           .map((c) => ({
-            name: defaultColors[c],
-            hexValue: c,
+            name: c,
+            hexValue: nameToHex[c],
           }))
-          .filter(c => c.name && c.hexValue);
-        console.log(colors);
+          .filter((c) => c.name && c.hexValue);
         const variables = {
           product: {
             ...product,
@@ -188,23 +215,23 @@ const ProductForm = () => {
             </label>
             <GithubPicker
               onChange={(color, _e) => {
-                values.colors = color.hex;
-                if (!colour) setColour(initValue.colors);
-                setColour(`${colour},${color.hex}`);
-                values.colors = colour;
+                let tmp = colour;
+                if (tmp === '') tmp = initValue.colors;
+                setColour(tmp + ',' + hexToName[color.hex]);
+                values.colors += ',' + hexToName[color.hex];
               }}
-              colors={Object.keys(defaultColors)}
+              colors={Object.keys(hexToName)}
             />
             <input
               id="colors"
               placeholder="Pick a color"
               type="text"
-              value={
-                // colour === '' ? initValue.colors : initValue.colors + colour
-                values.colors
-              }
+              value={colour === '' ? initValue.colors : colour}
               className="text-input"
-              onChange={handleChange}
+              onChange={(e) => {
+                setColour(e.target.value);
+                values.colors = e.target.value;
+              }}
             />
             {errors.colors && touched.colors ? (
               <div className="error-msg">{errors.colors}</div>
@@ -265,6 +292,24 @@ const ProductForm = () => {
             {errors.sizes && touched.sizes ? (
               <div className="error-msg">{errors.sizes}</div>
             ) : null}
+            <label htmlFor="featuringFrom" style={{ display: 'block' }}>
+              Featuring From
+            </label>
+            <input
+              id="featuringFrom"
+              type="date"
+              value={values.featuringFrom}
+              onChange={handleChange}
+            />
+            <label htmlFor="featuringFrom" style={{ display: 'block' }}>
+              Featuring To
+            </label>
+            <input
+              id="featuringTo"
+              type="date"
+              value={values.featuringTo}
+              onChange={handleChange}
+            />
             <button type="submit" disabled={isSubmitting}>
               Submit
             </button>
