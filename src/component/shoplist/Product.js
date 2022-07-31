@@ -17,7 +17,7 @@ const Product = ({ product, handleAddToCart }) => {
       </p>
       <button
         onClick={() => handleAddToCart(product)}
-        className="bg-white text-orange-600 w-full rounded-lg underline py-1 mt-auto mb-2 hover:bg-white hover:text-gray-600"
+        className="bg-white text-orange-600 rounded-lg underline hover:bg-white hover:text-gray-600"
       >
         Add to card
       </button>
