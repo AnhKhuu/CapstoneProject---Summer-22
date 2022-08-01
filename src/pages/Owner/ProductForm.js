@@ -6,6 +6,8 @@ import { useMutation, useQuery } from '@apollo/client';
 import { GithubPicker } from 'react-color';
 import { GET_PRODUCT } from '../../graphql/queries';
 import { useParams, useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const hexToName = {
   '#111011': 'Black',
@@ -154,7 +156,11 @@ const ProductForm = () => {
         };
         if (method === 'edit') await editProduct({ variables });
         else await addProduct({ variables });
-        navigate('/admin', { replace: true });
+        toast('Product has been saved!');
+        setTimeout(() => {
+          navigate('/admin')
+          location.reload()
+        }, 1000);
       }}
     >
       {(props) => {
@@ -379,6 +385,7 @@ const ProductForm = () => {
             >
               Submit
             </button>
+            <ToastContainer />
           </form>
         );
       }}

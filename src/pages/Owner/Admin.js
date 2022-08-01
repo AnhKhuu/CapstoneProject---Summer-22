@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import ProductForm from './ProductForm';
 import DeleteConfirmation from './DeleteConfirm';
 
+
 function Product({ product }) {
   const [showModal, setShowModal] = useState(false);
 
