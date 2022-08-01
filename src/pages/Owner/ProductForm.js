@@ -160,7 +160,7 @@ const ProductForm = () => {
         setTimeout(() => {
           navigate('/admin')
           location.reload()
-        }, 1000);
+        }, 1500);
       }}
     >
       {(props) => {
