@@ -69,7 +69,7 @@ const normalizeData = (product) => {
     name: product.name,
     description: product.description,
     featuringFrom: product.featuringFrom,
-    featuringFrom: product.featuringTo,
+    featuringTo: product.featuringTo,
   };
 };
 
@@ -126,7 +126,7 @@ const ProductForm = () => {
         sizes: '',
         description: '',
         featuringFrom: '',
-        featuringFrom: '',
+        featuringTo: '',
       };
   return (
     <Formik
@@ -167,50 +167,75 @@ const ProductForm = () => {
           touched,
         } = props;
         return (
-          <form className="add-new" onSubmit={handleSubmit}>
-            <label htmlFor="name" style={{ display: 'block' }}>
+          <form
+            className="mb-6 w-2/4 h-3/4 bg-orange-100 box-border m-auto p-12 rounded-lg"
+            onSubmit={handleSubmit}
+          >
+            <label
+              className="font-bold block mb-1"
+              htmlFor="name"
+              style={{ display: 'block' }}
+            >
               Name
             </label>
             <input
+              className="bg-white-50 mb-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-white-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-white-500 dark:focus:border-blue-500"
               id="name"
               placeholder="Enter product name"
               type="text"
               value={values.name}
               onChange={handleChange}
-              className="text-input"
             />
             {errors.name && touched.name ? (
-              <div className="error-msg">{errors.name}</div>
+              <div className="mt-2 text-sm text-red-600 dark:text-red-500">
+                {errors.name}
+              </div>
             ) : null}
-            <label htmlFor="price" style={{ display: 'block' }}>
+            <label
+              className="font-bold block mb-1"
+              htmlFor="price"
+              style={{ display: 'block' }}
+            >
               Price
             </label>
             <input
+              className="bg-white-50 mb-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-white-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-white-500 dark:focus:border-blue-500"
               id="price"
               placeholder="Enter price ($)"
               type="number"
               value={values.price}
               onChange={handleChange}
-              className="text-input"
             />
             {errors.price && touched.price ? (
-              <div className="error-msg">{errors.price}</div>
+              <div className="mt-2 text-sm text-red-600 dark:text-red-500">
+                {errors.price}
+              </div>
             ) : null}
-            <label htmlFor="stock" style={{ display: 'block' }}>
+            <label
+              className="font-bold block mb-1"
+              htmlFor="stock"
+              style={{ display: 'block' }}
+            >
               Stock
             </label>
             <input
+              className="bg-white-50 mb-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-white-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-white-500 dark:focus:border-blue-500"
               id="stock"
               placeholder="Enter stock"
               type="number"
               value={values.stock}
               onChange={handleChange}
-              className="text-input"
             />
             {errors.stock && touched.stock ? (
-              <div className="error-msg">{errors.stock}</div>
+              <div className="mt-2 text-sm text-red-600 dark:text-red-500">
+                {errors.stock}
+              </div>
             ) : null}
-            <label htmlFor="color" style={{ display: 'block' }}>
+            <label
+              className="font-bold block mb-1"
+              htmlFor="color"
+              style={{ display: 'block' }}
+            >
               Color
             </label>
             <GithubPicker
@@ -223,94 +248,135 @@ const ProductForm = () => {
               colors={Object.keys(hexToName)}
             />
             <input
+              className="bg-white-50 mb-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-white-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-white-500 dark:focus:border-blue-500"
               id="colors"
               placeholder="Pick a color"
               type="text"
               value={colour === '' ? initValue.colors : colour}
-              className="text-input"
               onChange={(e) => {
                 setColour(e.target.value);
                 values.colors = e.target.value;
               }}
             />
             {errors.colors && touched.colors ? (
-              <div className="error-msg">{errors.colors}</div>
+              <div className="mt-2 text-sm text-red-600 dark:text-red-500">
+                {errors.colors}
+              </div>
             ) : null}
-            <label htmlFor="description" style={{ display: 'block' }}>
+            <label
+              className="font-bold block mb-1"
+              htmlFor="description"
+              style={{ display: 'block' }}
+            >
               Description
             </label>
             <input
+              className="bg-white-50 mb-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-white-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-white-500 dark:focus:border-blue-500"
               id="description"
               placeholder="Enter short description"
               type="text"
               value={values.description}
               onChange={handleChange}
-              className="text-input"
             />
             {errors.description && touched.description ? (
-              <div className="error-msg">{errors.description}</div>
+              <div className="mt-2 text-sm text-red-600 dark:text-red-500">
+                {errors.description}
+              </div>
             ) : null}
-            <label htmlFor="categories" style={{ display: 'block' }}>
+            <label
+              className="font-bold block mb-1"
+              htmlFor="categories"
+              style={{ display: 'block' }}
+            >
               Catergories
             </label>
             <input
+              className="bg-white-50 mb-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-white-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-white-500 dark:focus:border-blue-500"
               id="categories"
               placeholder="Enter Categories, separated by semicolon"
               type="text"
               value={values.categories}
               onChange={handleChange}
-              className="text-input"
             />
             {errors.categories && touched.categories ? (
-              <div className="error-msg">{errors.categories}</div>
+              <div className="mt-2 text-sm text-red-600 dark:text-red-500">
+                {errors.categories}
+              </div>
             ) : null}
-            <label htmlFor="pictures" style={{ display: 'block' }}>
+            <label
+              className="font-bold block mb-1"
+              htmlFor="pictures"
+              style={{ display: 'block' }}
+            >
               Picture
             </label>
             <input
+              className="bg-white-50 mb-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-white-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-white-500 dark:focus:border-blue-500"
               id="pictures"
               placeholder="Enter picture URL"
               type="text"
               value={values.pictures}
               onChange={handleChange}
-              className="text-input"
             />
             {errors.pictures && touched.pictures ? (
-              <div className="error-msg">{errors.pictures}</div>
+              <div className="mt-2 text-sm text-red-600 dark:text-red-500">
+                {errors.pictures}
+              </div>
             ) : null}
-            <label htmlFor="sizes" style={{ display: 'block' }}>
+            <label
+              className="font-bold block mb-1"
+              htmlFor="sizes"
+              style={{ display: 'block' }}
+            >
               Size
             </label>
             <input
+              className="bg-white-50 mb-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-white-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-white-500 dark:focus:border-blue-500"
               id="sizes"
               placeholder="Enter size"
               type="text"
               value={values.sizes}
               onChange={handleChange}
-              className="text-input"
             />
             {errors.sizes && touched.sizes ? (
-              <div className="error-msg">{errors.sizes}</div>
+              <div className="mt-2 text-sm text-red-600 dark:text-red-500">
+                {errors.sizes}
+              </div>
             ) : null}
-            <label htmlFor="featuringFrom" style={{ display: 'block' }}>
+            <label
+              className="font-bold block mb-1"
+              htmlFor="featuringFrom"
+              style={{ display: 'block' }}
+            >
               Featuring From
             </label>
             <input
+              className="bg-white-50 mb-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-white-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-white-500 dark:focus:border-blue-500"
               id="featuringFrom"
               type="date"
               value={values.featuringFrom}
               onChange={handleChange}
             />
-            <label htmlFor="featuringFrom" style={{ display: 'block' }}>
+            <label
+              className="font-bold block mb-1"
+              htmlFor="featuringFrom"
+              style={{ display: 'block' }}
+            >
               Featuring To
             </label>
             <input
+              className="bg-white-50 mb-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-white-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-blackblack dark:focus:ring-white-500 dark:focus:border-blue-500"
               id="featuringTo"
               type="date"
               value={values.featuringTo}
               onChange={handleChange}
             />
-            <button type="submit" disabled={isSubmitting}>
+            <button
+              className="mt-4 p-12 inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-indigo-200 rounded-lg hover:bg-indigo-500 focus:ring-4 focus:outline-none focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800
+            "
+              type="submit"
+              disabled={isSubmitting}
+            >
               Submit
             </button>
           </form>
