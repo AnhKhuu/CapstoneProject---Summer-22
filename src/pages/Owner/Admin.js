@@ -73,12 +73,16 @@ function AllProducts() {
   if (error) return <div> Something went wrong </div>;
   return (
     <div>
-      <Link to="/new_product">
-        <div>
-          <button>Add new</button>
-        </div>
-      </Link>
-      <div className="flex flex-wrap justify-between">
+      <div className="w-64 flex  flex-col text-gray-400 text-nomal font-normal text-left uppercase m-1 ml-4">
+        <Link to="/new_product">
+          <div>
+            <button className="text-2xl -ml-40 mt-10 bg-yellow-300 text-gray-600 font-bold block text-center cursor-pointer">
+              Add New
+            </button>
+          </div>
+        </Link>
+      </div>
+      <div className="flex flex-wrap justify-between -mt-20 -mr-40 ml-10">
         {data.products.map((product) => (
           <Product key={product.id} product={product} />
         ))}
