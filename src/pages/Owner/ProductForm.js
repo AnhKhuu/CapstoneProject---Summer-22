@@ -168,7 +168,7 @@ const ProductForm = () => {
         } = props;
         return (
           <form
-            className="mb-6 w-2/4 h-3/4 bg-orange-100 box-border m-auto p-12 rounded-lg"
+            className="mb-6 w-2/4 h-3/4 bg-orange-200 box-border m-auto p-12 rounded-lg"
             onSubmit={handleSubmit}
           >
             <label

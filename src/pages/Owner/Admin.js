@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import MainLayout from '../../layout/MainLayout';
 import { GET_PRODUCTS } from '../../graphql/queries';
 import { DELETE_PRODUCT, EDIT_PRODUCT } from '../../graphql/mutations';
 import { useMutation, useQuery } from '@apollo/client';
 import { Link } from 'react-router-dom';
 import ProductForm from './ProductForm';
+import DeleteConfirmation from './DeleteConfirm';
 
 function Product({ product }) {
+  const [showModal, setShowModal] = useState(false);
+
+  const hideConfirmationModal = () => setShowModal(false);
+
   const [deleteProduct, { data, loading, error }] = useMutation(
     DELETE_PRODUCT,
     {
@@ -39,13 +44,17 @@ function Product({ product }) {
       <div className="inline-flex w-18 h-8 bg-transparent space-x-16 rounded-lg mb-4 ml-8">
         <button
           className="w-auto h-10 block items-center py-2 px-3 text-sm font-medium text-center text-white bg-indigo-200 rounded-lg hover:bg-indigo-500 focus:ring-4 focus:outline-none focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800"
-          onClick={(e) => {
-            e.preventDefault();
-            deleteProduct();
-          }}
+          onClick={() => setShowModal(true)}
         >
           Remove
         </button>
+
+        <DeleteConfirmation
+          showModal={showModal}
+          confirmModal={() => deleteProduct()}
+          hideModal={() => setShowModal(false)}
+          message={'Are you sure you want to delete this item?'}
+        />
         <Link to={`/edit_product/${product.id}`}>
           <button className="w-auto h-10 block items-center py-2 px-3 text-sm font-medium text-center text-white bg-indigo-200 rounded-lg hover:bg-indigo-500 focus:ring-4 focus:outline-none focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
             Edit
@@ -64,6 +73,11 @@ function AllProducts() {
   if (error) return <div> Something went wrong </div>;
   return (
     <div>
+      <Link to="/new_product">
+        <div>
+          <button>Add new</button>
+        </div>
+      </Link>
       <div className="flex flex-wrap justify-between">
         {data.products.map((product) => (
           <Product key={product.id} product={product} />
