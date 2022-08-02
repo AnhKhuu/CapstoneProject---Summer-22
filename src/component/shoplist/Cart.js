@@ -1,13 +1,14 @@
 import React, { useRef } from 'react';
-
+import { useStore } from '../../store/hooks';
+import {
+  addToCart,
+  removeFromCart,
+  reduceQuantityInCart,
+} from '../../store/actions';
 import { AiOutlinePlusSquare, AiOutlineMinusSquare } from 'react-icons/ai';
 
-const Cart = ({
-  setIsShowCart,
-  cart,
-  handleAddToCart,
-  handleRemoveFromCart,
-}) => {
+const Cart = ({ setIsShowCart, cart }) => {
+  const [state, dispatch] = useStore();
   const cartRef = useRef();
   const total = (arr) => {
     return arr.reduce((cal, item) => {
@@ -28,6 +29,10 @@ const Cart = ({
     }, 300);
   };
 
+  const handleRemoveFromCart = (index) => {
+    dispatch(removeFromCart(index));
+  };
+
   return (
     <div
       className="fixed inset-0 bg-[rgba(0,0,0,0.7)]"
@@ -40,9 +45,9 @@ const Cart = ({
       >
         <h1 className="bg-amber-50 py-2 text-center text-black">Cart</h1>
         <div className="flex flex-col items-center px-2 py-4">
-          {cart.map((item) => (
+          {cart.map((item, index) => (
             <div
-              key={item.id}
+              key={index}
               className="text-center border-b-[3px] w-full mb-2 flex flex-col items-center"
             >
               <img
@@ -55,13 +60,19 @@ const Cart = ({
               </p>
               <h3 className="text-[0.8rem]">{item.name}</h3>
               <div className="flex items-center my-2">
-                <button onClick={() => handleRemoveFromCart(item.id)}>
+                <button
+                  onClick={() =>
+                    item.amount <= 1
+                      ? dispatch(removeFromCart(index))
+                      : dispatch(reduceQuantityInCart(index))
+                  }
+                >
                   <AiOutlineMinusSquare className="text-[30px] text-gray-500" />
                 </button>
                 <p className="text-red-600 mx-2">
                   {DollarUsd.format(item.price)}
                 </p>
-                <button onClick={() => handleAddToCart(item)}>
+                <button onClick={() => dispatch(addToCart(item))}>
                   <AiOutlinePlusSquare className="text-[30px] text-gray-500" />
                 </button>
               </div>

@@ -6,10 +6,13 @@ import {
   REMOVE_ITEM,
   ADD_TO_CHECKOUT,
   ADD_ALL_TO_CHECKOUT,
+  ADD_TO_CART,
+  REMOVE_FROM_CART,
+  REDUCE_QUANTITY_IN_CART,
 } from './constants';
 
 const initialState = {
-  totalItem: 0,
+  addToCartItems: [],
   cartItems: [],
   subTotal: 0,
   customerInfo: {},
@@ -107,6 +110,44 @@ function reducer(state, action) {
         ...state,
         checkoutState: updateAllCheckoutItems,
         subTotal: subTotalAfterUpdateAll,
+      };
+    case ADD_TO_CART:
+      const isExist = state.addToCartItems.find(
+        (item) => item == action.payload
+      );
+      console.log('isExist', isExist);
+      const modifyCart = isExist
+        ? [...state.addToCartItems]
+        : [...state.addToCartItems, action.payload];
+      const finalCart = modifyCart.map((item, index) =>
+        item == isExist
+          ? { ...item, amount: item.amount + 1 }
+          : { ...item, amount: 1 }
+      );
+      return {
+        ...state,
+        addToCartItems: finalCart,
+      };
+    case REDUCE_QUANTITY_IN_CART:
+      const reduceList = state.addToCartItems.map((item, index) =>
+        index === action.payload
+          ? { ...item, amount: item.amount - 1 }
+          : { ...item }
+      );
+      return {
+        ...state,
+        addToCartItems: reduceList,
+      };
+    case REMOVE_FROM_CART:
+      const indexInCart = state.addToCartItems.findIndex(
+        (item, index) => index === action.payload
+      );
+      const modify = [...state.addToCartItems]
+        .slice(0, indexInCart)
+        .concat([...state.addToCartItems].slice(indexInCart + 1));
+      return {
+        ...state,
+        addToCartItems: modify,
       };
     default:
       throw new Error('Invalid action');

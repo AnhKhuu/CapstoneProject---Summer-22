@@ -6,7 +6,15 @@ import {
   REMOVE_ITEM,
   ADD_TO_CHECKOUT,
   ADD_ALL_TO_CHECKOUT,
+  ADD_TO_CART,
+  REMOVE_FROM_CART,
+  REDUCE_QUANTITY_IN_CART,
 } from './constants';
+
+export const addToCart = (payload) => ({
+  type: ADD_TO_CART,
+  payload,
+});
 
 export const increaseItem = (payload) => ({
   type: INCREASE_ITEM,
@@ -40,5 +48,15 @@ export const addToCheckout = (payload) => ({
 
 export const addAllToCheckout = (payload) => ({
   type: ADD_ALL_TO_CHECKOUT,
+  payload,
+});
+
+export const removeFromCart = (payload) => ({
+  type: REMOVE_FROM_CART,
+  payload,
+});
+
+export const reduceQuantityInCart = (payload) => ({
+  type: REDUCE_QUANTITY_IN_CART,
   payload,
 });

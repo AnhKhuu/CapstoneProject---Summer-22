@@ -1,3 +1,6 @@
+export const ADD_TO_CART = 'add_to_cart';
+export const REDUCE_QUANTITY_IN_CART = 'reduce_quantity_in_cart';
+export const REMOVE_FROM_CART = 'remove_from_cart';
 export const INCREASE_ITEM = 'increase_item';
 export const QUERY_CART_ITEMS = 'query_cart_item';
 export const INCREMENT = 'increment';
