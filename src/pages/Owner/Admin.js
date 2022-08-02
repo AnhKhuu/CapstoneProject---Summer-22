@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 import ProductForm from './ProductForm';
 import DeleteConfirmation from './DeleteConfirm';
 
-
 function Product({ product }) {
   const [showModal, setShowModal] = useState(false);
 
@@ -27,6 +26,7 @@ function Product({ product }) {
   }
 
   const handleEdit = async () => {};
+  const colors = product.colors.map((c) => c.name).join(', ');
 
   return (
     <div className="flex flex-wrap relative w-64 h-auto bg-green-300 overflow-hidden mt-4 mb-4 mr-1 ml-1 rounded-lg">
@@ -41,6 +41,7 @@ function Product({ product }) {
         <h2 className="text-2xl text-black font-bold">
           Stock: {product.stock}
         </h2>
+        <h2 className="text-2xl text-black font-bold text-center">Colors: {colors}</h2>
       </div>
       <div className="inline-flex w-18 h-8 bg-transparent space-x-16 rounded-lg mb-4 ml-8">
         <button

@@ -4,6 +4,7 @@ import * as yup from 'yup';
 import { ADD_PRODUCT, EDIT_PRODUCT } from '../../graphql/mutations';
 import { useMutation, useQuery } from '@apollo/client';
 import { GithubPicker } from 'react-color';
+import DatePicker from 'react-datepicker';
 import { GET_PRODUCT } from '../../graphql/queries';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
@@ -111,6 +112,7 @@ const ProductForm = () => {
     variables: {},
   });
   const [colour, setColour] = useState('');
+  //const [startDate, setStartDate] = useState(new Date());
   const { pid } = useParams();
   const navigate = useNavigate();
   const res = useQuery(GET_PRODUCT, { variables: { productId: pid || '' } });
@@ -125,7 +127,7 @@ const ProductForm = () => {
         colors: '',
         categories: '',
         pictures: '',
-        sizes: '',
+        sizes: '',  
         description: '',
         featuringFrom: '',
         featuringTo: '',
@@ -158,8 +160,8 @@ const ProductForm = () => {
         else await addProduct({ variables });
         toast('Product has been saved!');
         setTimeout(() => {
-          navigate('/admin')
-          location.reload()
+          navigate('/admin');
+          location.reload();
         }, 1500);
       }}
     >
@@ -363,6 +365,12 @@ const ProductForm = () => {
               value={values.featuringFrom}
               onChange={handleChange}
             />
+            {/* <DatePicker
+              onChange={handleChange}
+              date={values.featuringFrom}
+              mode="date"
+              format="DD-MM-YYYY"
+            /> */}
             <label
               className="font-bold block mb-1"
               htmlFor="featuringFrom"
