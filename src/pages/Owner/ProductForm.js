@@ -58,6 +58,37 @@ const nameToHex = {
   'Charcoal Heather': '#403a3b',
 };
 
+const customStyles = {
+  menu: (provided, state) => ({
+    ...provided,
+    width: state.selectProps.width,
+    borderBottom: '1px dotted pink',
+    color: state.selectProps.menuColor,
+    padding: 20,
+  }),
+
+  control: (_, { selectProps: { width }}) => ({
+    width: width
+  }),
+
+  singleValue: (provided, state) => {
+    const opacity = state.isDisabled ? 0.5 : 1;
+    const transition = 'opacity 300ms';
+
+    return { ...provided, opacity, transition };
+  }
+}
+
+  const App = () => (
+    <Select
+      styles={customStyles}
+      width='200px'
+      menuColor='red'
+      options={...}
+    />
+  );
+
+
 const normalizeData = (product) => {
   const colors = product.colors.map((c) => c.name).join(',');
   console.log(colors);
