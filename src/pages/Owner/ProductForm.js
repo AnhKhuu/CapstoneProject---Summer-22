@@ -352,7 +352,7 @@ const ProductForm = () => {
               </div>
             ) : null}
             <button
-              className="text-sm italic font-bold"
+              className="text-sm italic font-thin"
               onClick={(e) => {
                 e.preventDefault();
                 setDisplayInput(true);
@@ -391,7 +391,7 @@ const ProductForm = () => {
               </div>
             ) : null}
             <button
-              className="text-sm italic font-bold"
+              className="text-sm italic font-thin"
               onClick={(e) => {
                 e.preventDefault();
                 setDisplaySelect(true);
