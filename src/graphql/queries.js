@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
-const GET_CART_ITEMS = gql`
-  query Customer($customerCustomerId2: ID!) {
-    customer(customerId: $customerCustomerId2) {
+const GET_CUSTOMER = gql`
+  query Query($customerId: ID!) {
+    customer(customerId: $customerId) {
       id
       items {
         productId
@@ -16,19 +16,23 @@ const GET_CART_ITEMS = gql`
   }
 `;
 
-const GET_PRODUCT_CART_ITEMS = gql`
-  query Product($productId: ID!) {
+const GET_PRODUCT = gql`
+  query Query($productId: ID!) {
     product(id: $productId) {
-      name
+      id
       price
+      name
       stock
       colors {
         name
         hexValue
       }
+      description
       pictures
+      categories
       sizes
-      id
+      featuringFrom
+      featuringTo
     }
   }
 `;
@@ -42,17 +46,4 @@ const GET_FEE = gql`
   }
 `;
 
-const GET_CUSTOMER = gql`
-  query Query($customerId: ID!) {
-    customer(customerId: $customerId) {
-      id
-      items {
-        productId
-        color
-        size
-        quantity
-      }
-    }
-  }
-`;
-export { GET_CART_ITEMS, GET_PRODUCT_CART_ITEMS, GET_FEE, GET_CUSTOMER };
+export { GET_PRODUCT, GET_FEE, GET_CUSTOMER };
