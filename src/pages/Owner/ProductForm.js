@@ -5,6 +5,7 @@ import { ADD_PRODUCT, EDIT_PRODUCT } from '../../graphql/mutations';
 import { useMutation, useQuery } from '@apollo/client';
 import { GithubPicker } from 'react-color';
 import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import { GET_PRODUCT } from '../../graphql/queries';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
@@ -71,7 +72,6 @@ const defaultSizeOptions = [
 
 const normalizeData = (product) => {
   const colors = product.colors.map((c) => c.name).join(',');
-  console.log(colors);
   return {
     id: product.id,
     colors,
@@ -87,32 +87,47 @@ const normalizeData = (product) => {
   };
 };
 
-const Schema = yup.object({
-  name: yup
-    .string()
-    .min(2, 'Too short')
-    .max(144, 'Too long')
-    .required('Name is required'),
-  price: yup
-    .number('Must be a number')
-    .positive('Must be positive')
-    .integer('Must be integer')
-    .required('Price is required'),
-  stock: yup
-    .number('Must be a number')
-    .positive('Must be positive')
-    .integer('Must be integer')
-    .required('Stock is required'),
-  colors: yup.string().required('Color is required'),
-  description: yup.string().min(2, 'Too short').max(1000, 'Too long'),
-  catergories: yup.string(),
-  pictures: yup.string(),
-  // .matches(
-  //   /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
-  //   'Enter correct URL'
-  // ),
-  sizes: yup.string(),
-});
+// const Schema = yup.object({
+//   name: yup
+//     .string()
+//     .min(2, 'Too short')
+//     .max(144, 'Too long')
+//     .required('Name is required'),
+//   price: yup
+//     .number('Must be a number')
+//     .positive('Must be positive')
+//     .integer('Must be integer')
+//     .required('Price is required'),
+//   stock: yup
+//     .number('Must be a number')
+//     .positive('Must be positive')
+//     .integer('Must be integer')
+//     .required('Stock is required'),
+//   colors: yup.string().required('Color is required'),
+//   description: yup.string().min(2, 'Too short').max(1000, 'Too long'),
+//   catergories: yup.string(),
+//   pictures: yup.string(),
+//   sizes: yup.string(),
+// });
+
+// const now = 
+const validate = (values) => {
+  const errors = {};
+
+  if (!values.name) {
+    errors.name = 'Required clm';
+  } else if (values.name.length > 144) {
+    errors.name = 'Name too long';
+  } else if (values.name.length < 2) {
+    errors.name = 'chim ngan';
+  }
+
+  if (values.featuringFrom && values.featuringFrom < Date.now()) {
+    errors.featuringFrom = 'Featuring From should be at least from today';
+  }
+
+  return errors;
+};
 
 const ProductForm = () => {
   const [addProduct, { data, loading, errors }] = useMutation(ADD_PRODUCT, {
@@ -126,7 +141,7 @@ const ProductForm = () => {
   const [displaySelect, setDisplaySelect] = useState(false);
   const [displayInput, setDisplayInput] = useState(false);
   const [inputPicture, setInputPicture] = useState(null);
-  //const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState('');
   const { pid } = useParams();
   const navigate = useNavigate();
   const res = useQuery(GET_PRODUCT, { variables: { productId: pid || '' } });
@@ -143,13 +158,14 @@ const ProductForm = () => {
         pictures: '',
         sizes: '',
         description: '',
-        featuringFrom: '',
-        featuringTo: '',
+        featuringFrom: new Date(),
+        featuringTo: new Date(),
       };
   return (
     <Formik
       initialValues={initValue}
-      validationSchema={Schema}
+      // validationSchema={Schema}
+      validate={validate}
       onSubmit={async (product, e) => {
         e.preventDefault = true;
         const colors = (colour === '' ? initValue.colors : colour)
@@ -417,19 +433,15 @@ const ProductForm = () => {
             >
               Featuring From
             </label>
-            <input
+            <DatePicker
+              dateFormat="dd/MM/yyyy"
               className="bg-white-50 mb-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-white-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-white-500 dark:focus:border-blue-500"
-              id="featuringFrom"
-              type="date"
-              value={values.featuringFrom}
-              onChange={handleChange}
+              selected={new Date(values.featuringFrom)}
+              onChange={(date) => {
+                setStartDate(date);
+                values.featuringFrom = date;
+              }}
             />
-            {/* <DatePicker
-              onChange={handleChange}
-              date={values.featuringFrom}
-              mode="date"
-              format="DD-MM-YYYY"
-            /> */}
             <label
               className="font-bold block mb-1"
               htmlFor="featuringFrom"
@@ -437,12 +449,14 @@ const ProductForm = () => {
             >
               Featuring To
             </label>
-            <input
-              className="bg-white-50 mb-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-white-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-blackblack dark:focus:ring-white-500 dark:focus:border-blue-500"
-              id="featuringTo"
-              type="date"
-              value={values.featuringTo}
-              onChange={handleChange}
+            <DatePicker
+              dateFormat="dd/MM/yyyy"
+              className="bg-white-50 mb-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-white-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-white-500 dark:focus:border-blue-500"
+              selected={new Date(values.featuringTo)}
+              onChange={(date) => {
+                setStartDate(date);
+                values.featuringTo = date;
+              }}
             />
             <button
               className="mt-4 p-12 inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-indigo-200 rounded-lg hover:bg-indigo-500 focus:ring-4 focus:outline-none focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800
