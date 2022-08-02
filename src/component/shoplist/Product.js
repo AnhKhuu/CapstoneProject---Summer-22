@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Product = ({ product, handleAddToCart }) => {
   const DollarUsd = new Intl.NumberFormat('en-US', {
@@ -11,7 +12,10 @@ const Product = ({ product, handleAddToCart }) => {
       <div className="w-[100px]">
         <img className="w-full h-full" src={product.img} alt={product.name} />
       </div>
-      <h3 className="text-gray-600">{product.name}</h3>
+      <h3 className="text-gray-600">
+        <Link to={{ pathname: `/shoplist/${product.id}` }}>{product.name}</Link>
+      </h3>
+
       <p className="text-gray-900 font-bold">
         {DollarUsd.format(product.price)}
       </p>
