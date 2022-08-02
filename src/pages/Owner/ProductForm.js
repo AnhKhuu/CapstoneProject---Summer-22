@@ -355,7 +355,7 @@ const ProductForm = () => {
               className="text-sm italic font-thin"
               onClick={(e) => {
                 e.preventDefault();
-                setDisplayInput(true);
+                setDisplayInput(!displayInput);
               }}
             >
               Add more...
@@ -394,7 +394,7 @@ const ProductForm = () => {
               className="text-sm italic font-thin"
               onClick={(e) => {
                 e.preventDefault();
-                setDisplaySelect(true);
+                setDisplaySelect(!displaySelect);
               }}
             >
               Add more...
