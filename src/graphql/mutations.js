@@ -16,6 +16,14 @@ const DELETE_PRODUCT = gql`
   }
 `;
 
+const ADD_PRODUCT = gql`
+  mutation Mutation($product: AddProductInput!) {
+    addProduct(product: $product) {
+      id
+    }
+  }
+`;
+
 const EDIT_PRODUCT = gql`
   mutation AddProduct($product: UpdateProductInput!) {
     updateProduct(product: $product) {
@@ -40,4 +48,11 @@ const EMPTY_CART = gql`
   }
 `;
 
-export { UPDATE_PRODUCT, UPDATE_CUSTOMER, EMPTY_CART, ADD_PRODUCT, DELETE_PRODUCT, EDIT_PRODUCT };
+export {
+  UPDATE_PRODUCT,
+  UPDATE_CUSTOMER,
+  EMPTY_CART,
+  ADD_PRODUCT,
+  DELETE_PRODUCT,
+  EDIT_PRODUCT,
+};
