@@ -9,6 +9,7 @@ import { GET_PRODUCT } from '../../graphql/queries';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Select from 'react-select';
 
 const hexToName = {
   '#111011': 'Black',
@@ -58,6 +59,16 @@ const nameToHex = {
   'Charcoal Heather': '#403a3b',
 };
 
+const defaultSizeOptions = [
+  { value: 'XXS', label: 'XXS' },
+  { value: 'XS', label: 'XS' },
+  { value: 'S', label: 'S' },
+  { value: 'M', label: 'M' },
+  { value: 'L', label: 'L' },
+  { value: 'XL', label: 'XL' },
+  { value: 'XXL', label: 'XXL' },
+];
+
 const normalizeData = (product) => {
   const colors = product.colors.map((c) => c.name).join(',');
   console.log(colors);
@@ -95,12 +106,11 @@ const Schema = yup.object({
   colors: yup.string().required('Color is required'),
   description: yup.string().min(2, 'Too short').max(1000, 'Too long'),
   catergories: yup.string(),
-  pictures: yup
-    .string()
-    .matches(
-      /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
-      'Enter correct URL'
-    ),
+  pictures: yup.string(),
+  // .matches(
+  //   /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
+  //   'Enter correct URL'
+  // ),
   sizes: yup.string(),
 });
 
@@ -112,6 +122,10 @@ const ProductForm = () => {
     variables: {},
   });
   const [colour, setColour] = useState('');
+  const [selectedSizeOption, setSelectedSizeOption] = useState(null);
+  const [displaySelect, setDisplaySelect] = useState(false);
+  const [displayInput, setDisplayInput] = useState(false);
+  const [inputPicture, setInputPicture] = useState(null);
   //const [startDate, setStartDate] = useState(new Date());
   const { pid } = useParams();
   const navigate = useNavigate();
@@ -145,14 +159,19 @@ const ProductForm = () => {
             hexValue: nameToHex[c],
           }))
           .filter((c) => c.name && c.hexValue);
+        const sizes = [
+          product.sizes,
+          selectedSizeOption?.map((s) => s.value),
+        ].join(',');
+        const pictures = [product.pictures, inputPicture].join(',');
         const variables = {
           product: {
             ...product,
             price: product.price,
             stock: product.stock,
             categories: product.categories.split(';'),
-            pictures: [product.pictures],
-            sizes: [product.sizes],
+            pictures: [pictures],
+            sizes: [sizes],
             colors: colors,
           },
         };
@@ -266,6 +285,7 @@ const ProductForm = () => {
                 values.colors = e.target.value;
               }}
             />
+
             {errors.colors && touched.colors ? (
               <div className="mt-2 text-sm text-red-600 dark:text-red-500">
                 {errors.colors}
@@ -331,6 +351,25 @@ const ProductForm = () => {
                 {errors.pictures}
               </div>
             ) : null}
+            <button
+              className="text-sm italic font-thin"
+              onClick={(e) => {
+                e.preventDefault();
+                setDisplayInput(!displayInput);
+              }}
+            >
+              Add more...
+            </button>
+            {displayInput && (
+              <input
+                className="bg-white-50 mb-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-white-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-white-500 dark:focus:border-blue-500"
+                id="morepics"
+                placeholder="Enter picture URL"
+                type="text"
+                value={inputPicture}
+                onChange={(e) => setInputPicture(e.target.value)}
+              />
+            )}
             <label
               className="font-bold block mb-1"
               htmlFor="sizes"
@@ -351,6 +390,26 @@ const ProductForm = () => {
                 {errors.sizes}
               </div>
             ) : null}
+            <button
+              className="text-sm italic font-thin"
+              onClick={(e) => {
+                e.preventDefault();
+                setDisplaySelect(!displaySelect);
+              }}
+            >
+              Add more...
+            </button>
+            {displaySelect && (
+              <Select
+                // styles={customStyles}
+                isMulti
+                width="200px"
+                name="colors"
+                options={defaultSizeOptions}
+                defaultValue={selectedSizeOption}
+                onChange={setSelectedSizeOption}
+              />
+            )}
             <label
               className="font-bold block mb-1"
               htmlFor="featuringFrom"
