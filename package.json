@@ -66,4 +66,5 @@
     "*.{js,jsx}": "eslint --cache --fix",
     "*.{js,css,md}": "prettier --write"
   }
+  
 }

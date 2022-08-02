@@ -2,23 +2,24 @@ import { gql } from '@apollo/client';
 
 const GET_PRODUCTS = gql`
   query Query {
-  products {
-    id
-    name
-    price
-    stock
-    colors {
+    products {
+      id
       name
-      hexValue
+      price
+      stock
+      colors {
+        name
+        hexValue
+      }
+      description
+      categories
+      pictures
+      sizes
+      featuringFrom
+      featuringTo
     }
-    description
-    categories
-    pictures
-    sizes
-    featuringFrom
-    featuringTo
   }
-}`;
+`;
 
 const GET_CUSTOMER = gql`
   query Query($customerId: ID!) {
@@ -32,30 +33,29 @@ const GET_CUSTOMER = gql`
       }
       name
       location
-
     }
   }
 `;
 
 const GET_PRODUCT = gql`
   query Product($productId: ID!) {
-  product(id: $productId) {
-    id
-    name
-    price
-    stock
-    colors {
+    product(id: $productId) {
+      id
       name
-      hexValue
+      price
+      stock
+      colors {
+        name
+        hexValue
+      }
+      description
+      categories
+      pictures
+      sizes
+      featuringFrom
+      featuringTo
     }
-    description
-    categories
-    pictures
-    sizes
-    featuringFrom
-    featuringTo
   }
-}
 `;
 
 const GET_FEE = gql`
