@@ -117,13 +117,13 @@ const validate = (values) => {
   if (!values.name) {
     errors.name = 'Required clm';
   } else if (values.name.length > 144) {
-    errors.name = 'Name too long';
+    errors.name = 'Name must be less than 144 characters';
   } else if (values.name.length < 2) {
-    errors.name = 'chim ngan';
+    errors.name = 'Name must be at least 2 characters';
   }
 
   if (values.featuringFrom && values.featuringFrom < Date.now()) {
-    errors.featuringFrom = 'Featuring From should be at least from today';
+    errors.featuringFrom = 'Date should be at least from today';
   }
 
   return errors;
@@ -442,6 +442,11 @@ const ProductForm = () => {
                 values.featuringFrom = date;
               }}
             />
+            {errors.featuringFrom && touched.featuringFrom ? (
+              <div className="mt-2 text-sm text-red-600 dark:text-red-500">
+                {errors.featuringFrom}
+              </div>
+            ) : null}
             <label
               className="font-bold block mb-1"
               htmlFor="featuringFrom"
@@ -458,6 +463,11 @@ const ProductForm = () => {
                 values.featuringTo = date;
               }}
             />
+            {errors.featuringTo && touched.featuringTo ? (
+              <div className="mt-2 text-sm text-red-600 dark:text-red-500">
+                {errors.featuringTo}
+              </div>
+            ) : null}
             <button
               className="mt-4 p-12 inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-indigo-200 rounded-lg hover:bg-indigo-500 focus:ring-4 focus:outline-none focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800
             "
