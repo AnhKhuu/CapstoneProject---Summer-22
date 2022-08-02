@@ -1,5 +1,25 @@
 import { gql } from '@apollo/client';
 
+const GET_PRODUCTS = gql`
+  query Query {
+  products {
+    id
+    name
+    price
+    stock
+    colors {
+      name
+      hexValue
+    }
+    description
+    categories
+    pictures
+    sizes
+    featuringFrom
+    featuringTo
+  }
+}`;
+
 const GET_CUSTOMER = gql`
   query Query($customerId: ID!) {
     customer(customerId: $customerId) {
@@ -12,29 +32,30 @@ const GET_CUSTOMER = gql`
       }
       name
       location
+
     }
   }
 `;
 
 const GET_PRODUCT = gql`
-  query Query($productId: ID!) {
-    product(id: $productId) {
-      id
-      price
+  query Product($productId: ID!) {
+  product(id: $productId) {
+    id
+    name
+    price
+    stock
+    colors {
       name
-      stock
-      colors {
-        name
-        hexValue
-      }
-      description
-      pictures
-      categories
-      sizes
-      featuringFrom
-      featuringTo
+      hexValue
     }
+    description
+    categories
+    pictures
+    sizes
+    featuringFrom
+    featuringTo
   }
+}
 `;
 
 const GET_FEE = gql`
@@ -46,4 +67,4 @@ const GET_FEE = gql`
   }
 `;
 
-export { GET_PRODUCT, GET_FEE, GET_CUSTOMER };
+export { GET_PRODUCT, GET_FEE, GET_CUSTOMER, GET_PRODUCTS };
