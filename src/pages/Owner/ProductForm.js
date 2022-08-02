@@ -127,7 +127,7 @@ const ProductForm = () => {
         colors: '',
         categories: '',
         pictures: '',
-        sizes: '',  
+        sizes: '',
         description: '',
         featuringFrom: '',
         featuringTo: '',
