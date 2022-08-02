@@ -12,30 +12,33 @@ const Item = ({ item, index, checkoutState }) => {
   const [isShowModal, setIsShowModal] = useState(false);
   const [state, dispatch] = useStore();
 
-  const handleModify = (type) => {
-    if (type === 'increment' && item.quantity >= item.stock) {
-      alert('Item quantity reach limitation!');
-      return;
-    }
-    if (type === 'decrement' && item.quantity <= 1) {
-      setIsShowModal(true);
-    }
-    if (type === 'increment') {
-      dispatch(increment(index));
-    } else {
-      dispatch(decrement(index));
-    }
-  };
+  const handleModify = useCallback(
+    (type) => {
+      if (type === 'increment' && item.quantity >= item.stock) {
+        alert('Item quantity reach limitation!');
+        return;
+      }
+      if (type === 'decrement' && item.quantity <= 1) {
+        setIsShowModal(true);
+      }
+      if (type === 'increment') {
+        dispatch(increment(index));
+      } else {
+        dispatch(decrement(index));
+      }
+    },
+    [isShowModal]
+  );
 
   const handleRemoveItem = useCallback(() => {
     dispatch(removeItem(index));
     setIsShowModal(false);
-  });
+  }, [isShowModal]);
 
   const handleCancelRemoveItem = useCallback(() => {
     dispatch(increment(index));
     setIsShowModal(false);
-  }, [setIsShowModal]);
+  }, [isShowModal]);
 
   return (
     <div className="flex">

@@ -271,7 +271,7 @@ const Checkout = () => {
     } catch (error) {
       console.log(error);
     }
-  });
+  }, []);
 
   const compareChange = useCallback(
     (arr1, arr2, name, location) => {
@@ -295,7 +295,7 @@ const Checkout = () => {
         navigate('/', { replace: true });
       }
     },
-    [setIsShowModal]
+    [isShowModal]
   );
 
   const handleSave = useCallback(async (name, location) => {
@@ -327,7 +327,7 @@ const Checkout = () => {
   const handleCancel = useCallback(() => {
     setIsShowModal(false);
     navigate('/', { replace: true });
-  }, [setIsShowModal]);
+  }, [isShowModal]);
 
   return (
     <>
