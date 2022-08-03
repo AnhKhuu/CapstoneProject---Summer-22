@@ -66,5 +66,13 @@ const GET_FEE = gql`
     }
   }
 `;
+const GET_CATEGORIES = gql`
+  query Query {
+    products {
+      id
+      categories
+    }
+  }
+`;
 
-export { GET_PRODUCT, GET_FEE, GET_CUSTOMER, GET_PRODUCTS };
+export { GET_PRODUCT, GET_FEE, GET_CUSTOMER, GET_PRODUCTS, GET_CATEGORIES };

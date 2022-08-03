@@ -1,23 +1,7 @@
 import React, { useEffect } from 'react';
-
-const categories = [
-  {
-    id: 1,
-    name: 'All',
-  },
-  {
-    id: 2,
-    name: 'Phone',
-  },
-  {
-    id: 3,
-    name: 'Laptop',
-  },
-  {
-    id: 4,
-    name: 'Watch',
-  },
-];
+import { useQuery } from '@apollo/client';
+import { GET_CATEGORIES } from '../../graphql/queries';
+import { data } from 'autoprefixer';
 
 const prices = [
   {
@@ -55,6 +39,10 @@ const Filters = ({
       setFilters(products);
       return;
     }
+    const { loading, error, data } = useQuery(GET_CATEGORIES);
+    console.log(data);
+    if (loading) return <div> Loading... </div>;
+    if (error) return <div> Something went wrong </div>;
 
     const filterCategory = products.filter((item) =>
       activeCategory === 'All' ? item : item.categories == activeCategory
@@ -76,7 +64,7 @@ const Filters = ({
     <div>
       <div className="ml-3">
         <h1 className="text-2xl tracking-tight text-gray-900">Categories</h1>
-        {categories.map((item) => (
+        {data.products.map((item) => (
           <button
             onClick={() => setActiveCategory(item.name)}
             key={item.id}

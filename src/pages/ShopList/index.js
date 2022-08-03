@@ -26,7 +26,6 @@ const ShopList = () => {
   console.log({ error, data, loading });
   if (loading) return <div> Loading... </div>;
   if (error) return <div> Something went wrong </div>;
-
   /*useEffect(() => {
     const fetchProducts = async () => {
       setIsLoading(true);
