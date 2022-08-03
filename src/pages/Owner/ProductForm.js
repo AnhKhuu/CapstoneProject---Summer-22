@@ -147,7 +147,7 @@ const validate = (values) => {
   if (values.featuringFrom && values.featuringFrom < Date.now()) {
     errors.featuringFrom = 'Date should be at least from today';
   }
-  if (values.featuringTo && values.featuringTo < values.featuringFrom) {
+  if (values.featuringTo && values.featuringTo <= values.featuringFrom) {
     errors.featuringTo = 'Date should be later than featuring from date';
   }
 
