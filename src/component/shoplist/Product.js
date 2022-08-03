@@ -12,7 +12,7 @@ const Product = ({ product, handleAddToCart }) => {
       <div className="w-[100px]">
         <img
           className="w-full h-full"
-          src={product.pictures}
+          src={product.pictures[0]}
           alt={product.name}
         />
       </div>

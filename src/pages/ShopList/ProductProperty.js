@@ -10,8 +10,14 @@ const ProductProperty = () => {
   const { productId } = useParams();
   const [state, dispatch] = useStore();
   const ID = productId;
-  const [getProduct, { error, data, loading }] = useQuery(GET_PRODUCT, {
-    variables: { productId: ID },
+  console.log(ID);
+  // const [getProduct, { error, data, loading }] = useQuery(GET_PRODUCT, {
+  //   variables: { productId: ID },
+  // });
+  const { loading, error, data } = useQuery(GET_PRODUCT, {
+    variables: {
+      productId: ID,
+    },
   });
   console.log(data);
   if (loading) return <div> Loading... </div>;
