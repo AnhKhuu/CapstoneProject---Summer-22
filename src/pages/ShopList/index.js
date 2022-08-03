@@ -26,6 +26,7 @@ const ShopList = () => {
   console.log({ error, data, loading });
   if (loading) return <div> Loading... </div>;
   if (error) return <div> Something went wrong </div>;
+  console.log(Categories);
   /*useEffect(() => {
     const fetchProducts = async () => {
       setIsLoading(true);
@@ -91,6 +92,9 @@ const ShopList = () => {
               activePrice={activePrice}
               activeCategory={activeCategory}
               setActiveCategory={setActiveCategory}
+              getCategories={data.map((item) => {
+                return { id: item.id, categories: item.categories };
+              })}
             />
           </div>
 
