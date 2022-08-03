@@ -41,34 +41,43 @@ const Item = ({ item, index, checkoutState }) => {
   }, [isShowModal]);
 
   return (
-    <div className="flex">
-      <input
-        type="checkbox"
-        onChange={() => dispatch(addToCheckout(index))}
-        checked={checkoutState[index]}
-      />
-      <img src={item.pictures[0]} className="w-24 h-24"></img>
-      <div>
-        <p>{item.name}</p>
-        <p>Color: {item.color}</p>
-        <p>Size: {item.size}</p>
-        <div>
+    <div className="flex w-full border-t-2 py-6">
+      <div className="w-[15%] text-center my-auto">
+        <input
+          type="checkbox"
+          onChange={() => dispatch(addToCheckout(index))}
+          checked={checkoutState[index]}
+          className="cursor-pointer"
+        />
+      </div>
+      <div className="w-1/2 flex items-center">
+        <img src={item.pictures[0]} className="w-24 h-24 mr-3"></img>
+        <p className="text-sm">
+          <p className="font-semibold">{item.name}</p>
+          <p>Color: {item.color}</p>
+          <p>Size: {item.size}</p>
+        </p>
+      </div>
+      <div className="w-[15%] text-center my-auto">
+        <div className="rounded-2xl border-2 flex justify-around h-9 items-center">
           <button
-            className="border-2"
+            className="hover:text-[#907c6e] transition ease-in hover:text-2xl text-base w-[30%]"
             onClick={() => handleModify('decrement')}
           >
             -
           </button>
-          <span>{item.quantity}</span>
+          <span className="w-[40%]">{item.quantity}</span>
           <button
-            className="border-2"
+            className="hover:text-[#907c6e] transition ease-in hover:text-2xl text-base w-[30%]"
             onClick={() => handleModify('increment')}
           >
             +
           </button>
         </div>
-        <p>${item.quantity * item.price}</p>
       </div>
+      <p className="w-[20%] text-center my-auto">
+        ${item.quantity * item.price}
+      </p>
       <ConfirmModal
         isShowModal={isShowModal}
         setIsShowModal={setIsShowModal}
