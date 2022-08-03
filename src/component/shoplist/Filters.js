@@ -57,7 +57,7 @@ const Filters = ({
     }
 
     const filterCategory = products.filter((item) =>
-      activeCategory === 'All' ? item : item.category === activeCategory
+      activeCategory === 'All' ? item : item.categories == activeCategory
     );
 
     const filterPrice = filterCategory.filter((item) =>
