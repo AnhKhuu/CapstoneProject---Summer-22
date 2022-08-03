@@ -1,12 +1,26 @@
 import React, { useEffect } from 'react';
 import { useQuery } from '@apollo/client';
-import { GET_PRODUCTS } from '../../graphql/queries';
-import { data } from 'autoprefixer';
-/*const Categories = [
+import { GET_CATEGORIES } from '../../graphql/queries';
+
+const Categories = [
   {
-      id: 1,
-      categories: 'Phones',
-  },]*/
+    id: 1,
+    categories: 'All',
+  },
+  {
+    id: 2,
+    categories: 'Phone',
+  },
+  {
+    id: 3,
+    categories: 'Laptop',
+  },
+  {
+    id: 4,
+    categories: 'Watch',
+  },
+];
+
 const prices = [
   {
     id: 1,
@@ -37,13 +51,14 @@ const Filters = ({
   setActivePrice,
   products,
   setFilters,
-  getCategories,
+  getCategory,
 }) => {
   useEffect(() => {
     if (activeCategory === 'All' && activePrice === '') {
       setFilters(products);
       return;
     }
+
     const filterCategory = products.filter((item) =>
       activeCategory === 'All' ? item : item.categories == activeCategory
     );
@@ -64,9 +79,9 @@ const Filters = ({
     <div>
       <div className="ml-3">
         <h1 className="text-2xl tracking-tight text-gray-900">Categories</h1>
-        {getCategories.map((item) => (
+        {getCategory.map((item) => (
           <button
-            onClick={() => setActiveCategory(item.name)}
+            onClick={() => setActiveCategory(item.categories)}
             key={item.id}
             className={`flex mb-1 font-medium text-gray-900 px-2 py-3 ${
               activeCategory === item.categories &&
