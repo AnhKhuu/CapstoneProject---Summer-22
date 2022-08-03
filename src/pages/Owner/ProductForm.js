@@ -110,20 +110,45 @@ const normalizeData = (product) => {
 //   sizes: yup.string(),
 // });
 
-// const now = 
+// const now =
 const validate = (values) => {
   const errors = {};
 
   if (!values.name) {
-    errors.name = 'Required clm';
+    errors.name = 'Name is required';
   } else if (values.name.length > 144) {
     errors.name = 'Name must be less than 144 characters';
   } else if (values.name.length < 2) {
     errors.name = 'Name must be at least 2 characters';
   }
 
+  if (!values.price) {
+    errors.price = 'Price is required';
+  } else if (values.price < 0) {
+    errors.price = 'Price must be positive';
+  }
+
+  if (!values.stock) {
+    errors.price = 'Stock is required';
+  } else if (values.stock < 0) {
+    errors.price = 'Stock must be positive';
+  }
+
+  if (!values.colors) {
+    errors.colors = 'Color is required';
+  }
+
+  if (values.description.length > 1000) {
+    errors.name = 'Description must be less than 1000 characters';
+  } else if (values.name.length < 2) {
+    errors.name = 'Description must be at least 2 characters';
+  }
+
   if (values.featuringFrom && values.featuringFrom < Date.now()) {
     errors.featuringFrom = 'Date should be at least from today';
+  }
+  if (values.featuringTo && values.featuringTo < values.featuringFrom) {
+    errors.featuringTo = 'Date should be later than featuring from date';
   }
 
   return errors;
