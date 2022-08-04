@@ -106,7 +106,6 @@ const ProductForm = () => {
     const errors = {};
 
     let regExpName = /[a-zA-Z]/g;
-    let regExImageUrl = /(https?:\/\/.*\.(?:png|jpg))/i;
     if (!values.name) {
       errors.name = 'Name is required';
     } else if (values.name.length > 144) {
