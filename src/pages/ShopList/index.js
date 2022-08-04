@@ -22,8 +22,9 @@ const ShopList = () => {
   // const [isShowCart, setIsShowCart] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [state, dispatch] = useStore();
-  const { error, data, loading } = useQuery(GET_PRODUCTS);
-  console.log({ error, data, loading });
+  const { loading, error, data } = useQuery(GET_PRODUCTS);
+  // console.log({ error, data, loading });
+  console.log('DATA', data);
   if (loading) return <div> Loading... </div>;
   if (error) return <div> Something went wrong </div>;
   /*useEffect(() => {
@@ -91,7 +92,7 @@ const ShopList = () => {
               activePrice={activePrice}
               activeCategory={activeCategory}
               setActiveCategory={setActiveCategory}
-              getCategory={data.map((item) => {
+              getCategory={data.products.map((item) => {
                 return { id: item.id, categories: item.categories };
               })}
             />
