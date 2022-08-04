@@ -11,7 +11,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 //import Select from 'react-select';
-import ntc from './Ntcolor'
+import ntc from './Ntcolor';
 
 //Default sizes
 const defaultSizeOptions = [
@@ -46,7 +46,6 @@ const defaultSizeOptions = [
 //   pictures: yup.string(),
 //   sizes: yup.string(),
 // });
-
 
 // Add/edit product form
 const ProductForm = () => {
@@ -149,7 +148,7 @@ const ProductForm = () => {
           errors.featuringTo = 'Date should be later than featuring from date';
         }
         if (values.featuringFrom < today) {
-          errors.featuringTo = 'Feature From Date should be later than today';
+          errors.featuringTo = 'Date should be at least from today';
         }
       }
     }
