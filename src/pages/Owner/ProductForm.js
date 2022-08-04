@@ -12,7 +12,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 //import Select from 'react-select';
 
-
 //Default sizes
 const defaultSizeOptions = [
   { value: 'XXS', label: 'XXS' },
@@ -58,7 +57,6 @@ const ProductForm = () => {
     variables: {},
   });
   const [colour, setColour] = useState('');
-  const [selectedSizeOption, setSelectedSizeOption] = useState(null);
   const [selectedColor, setSelectedColor] = useState(null);
   const [displaySelect, setDisplaySelect] = useState(false);
   const [displayInput, setDisplayInput] = useState(false);
@@ -746,7 +744,6 @@ const ProductForm = () => {
 };
 
 export default ProductForm;
-
 
 var ntc = {
   init: function () {
