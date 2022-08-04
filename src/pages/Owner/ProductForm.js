@@ -104,12 +104,16 @@ const ProductForm = () => {
   const validate = (values) => {
     const errors = {};
 
+    let regExpName = /[a-zA-Z]/g;
+    let regExImageUrl = /(https?:\/\/.*\.(?:png|jpg))/i
     if (!values.name) {
       errors.name = 'Name is required';
     } else if (values.name.length > 144) {
       errors.name = 'Name must be less than 144 characters';
     } else if (values.name.length < 2) {
       errors.name = 'Name must be at least 2 characters';
+    } else if (!regExpName.test(values.name)) {
+      errors.name = 'Name must have at least 1 characters';
     }
 
     if (!values.price) {
@@ -119,9 +123,9 @@ const ProductForm = () => {
     }
 
     if (!values.stock) {
-      errors.price = 'Stock is required';
+      errors.stock = 'Stock is required';
     } else if (values.stock < 0) {
-      errors.price = 'Stock must be positive';
+      errors.stock = 'Stock must be positive';
     }
 
     if (!values.colors) {
@@ -213,8 +217,12 @@ const ProductForm = () => {
         let pictures = product.pictures;
         if (inputPicture !== null) {
           console.log('inputPicture :' + inputPicture);
-          pictures.push(inputPicture);
+          // let temp = inputPicture.split(',');
+          // pictures.concat(temp);
+          pictures += ',' + inputPicture;
         }
+        console.log('pictures');
+        console.log(pictures);
         if (method == 'new') {
           const variables = {
             product: {
@@ -241,6 +249,9 @@ const ProductForm = () => {
           };
           variables.product['id'] = product.id;
 
+          console.log('original value');
+          console.log(originalValue);
+
           if (product.name != originalValue.name) {
             variables.product['name'] = product.name;
           }
@@ -259,10 +270,10 @@ const ProductForm = () => {
           if (product.categories != originalValue.categories) {
             variables.product['categories'] = product.categories;
           }
-          if (product.pictures != originalValue.pictures) {
-            variables.product['pictures'] = product.pictures;
+          if (pictures != originalValue.pictures) {
+            variables.product['pictures'] = pictures;
           }
-          if (product.colors != originalValue.colors) {
+          if (colors != originalValue.colors) {
             variables.product['colors'] = colors;
           }
           if (product.sizes != originalValue.sizes) {
@@ -311,6 +322,7 @@ const ProductForm = () => {
               id="name"
               placeholder="Enter product name"
               type="text"
+              // pattern="^\d*[a-zA-Z][a-za-Z0-9]*$"
               value={values.name}
               onChange={handleChange}
             />
