@@ -126,6 +126,9 @@ const ProductForm = () => {
   const normalizeData = (product) => {
     console.log(product);
     const colors = product.colors.map((c) => c.name).join(', ');
+    const selectedColor = product.colors.map((c) => c.hexValue).join(',');
+    console.log('selectedColor');
+    console.log('selectedColor');
     const categories =
       product.categories == [''] ? '' : product.categories.join(', ');
     let pictureURLs = '';
@@ -138,6 +141,7 @@ const ProductForm = () => {
     return {
       id: product.id,
       colors: colors,
+      selectedColor: selectedColor,
       pictures: pictureURLs,
       sizes: product.sizes.join(','),
       categories: categories,
@@ -245,14 +249,18 @@ const ProductForm = () => {
       validate={validate}
       onSubmit={async (product, e) => {
         e.preventDefault = true;
-        console.log(size);
-        const colors = (colour === '' ? initValue.colors : colour)
+        console.log('colour:');
+        console.log(colour);
+        console.log('initValue.selectedColor:');
+        console.log(initValue.selectedColor);
+        const colors = (colour === '' ? initValue.selectedColor : colour)
           .split(',')
           .map((c) => ({
             name: ntc.name(c)[1],
             hexValue: c,
           }))
           .filter((c) => c.name && c.hexValue);
+        console.log('colors:');
         console.log(colors);
         let sizes = [
           product.sizes,
@@ -452,10 +460,14 @@ const ProductForm = () => {
                 className="text-sm italic font-thin"
                 onClick={(e) => {
                   console.log(values.colors);
-                  setColour(colour + ',' + selectedColor);
                   if (values.colors.length > 0) {
+                    setColour(
+                      values.selectedColor + ',' + colour + ',' + selectedColor
+                    );
                     values.colors += ', ' + ntc.name(selectedColor)[1];
                   } else {
+                    console.log('chuoi bang 0');
+                    setColour(selectedColor);
                     values.colors += ntc.name(selectedColor)[1];
                   }
                 }}
@@ -470,7 +482,13 @@ const ProductForm = () => {
               placeholder="Pick a color"
               type="text"
               value={values.colors}
-              onChange={handleChange}
+              onChange={(e) => {
+                values.colors = e.target.value;
+                if (e.target.value.length == 0) {
+                  values.selectedColor = '';
+                }
+                setDisplayInput(e.target.value);
+              }}
             />
             {errors.colors && touched.colors ? (
               <div className="mt-2 text-sm text-red-600 dark:text-red-500">
