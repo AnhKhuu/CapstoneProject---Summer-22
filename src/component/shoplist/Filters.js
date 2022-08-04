@@ -2,25 +2,6 @@ import React, { useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_CATEGORIES } from '../../graphql/queries';
 
-const Categories = [
-  {
-    id: 1,
-    categories: 'All',
-  },
-  {
-    id: 2,
-    categories: 'Phone',
-  },
-  {
-    id: 3,
-    categories: 'Laptop',
-  },
-  {
-    id: 4,
-    categories: 'Watch',
-  },
-];
-
 const prices = [
   {
     id: 1,
@@ -72,7 +53,12 @@ const Filters = ({
         ? item.price >= 1000 && item.price <= 1500
         : item.price > 1500
     );
-
+    //let { getCategory } = this.state;
+    //getCategory.push({ id:1, categories:"All"})
+    //this.setState({getCategory: getCategory})
+    //console.log(getCategory)
+    //const uniqueCategories = [...new Set(getCategory.map(item => item.categories))];
+    //console.log(uniqueCategories);
     setFilters(filterPrice);
   }, [activeCategory, activePrice, products, setFilters]);
   return (
