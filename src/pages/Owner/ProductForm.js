@@ -1,65 +1,17 @@
 import React, { useState } from 'react';
-import { Formik, yupToFormErrors } from 'formik';
-import * as yup from 'yup';
+import { Formik } from 'formik';
+//import * as yup from 'yup';
 import { ADD_PRODUCT, EDIT_PRODUCT } from '../../graphql/mutations';
 import { useMutation, useQuery } from '@apollo/client';
-import { GithubPicker } from 'react-color';
-import DatePicker from 'react-datepicker';
+// import { GithubPicker } from 'react-color';
+// import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { GET_PRODUCT } from '../../graphql/queries';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Select from 'react-select';
+//import Select from 'react-select';
 
-//Default colors
-const hexToName = {
-  '#111011': 'Black',
-  '#016541': 'Green',
-  '#ffce6f': 'Yellow',
-  '#fbfbfa': 'White',
-  '#b0b3b6': 'Heather Grey',
-  '#263037': 'Denim Heather',
-  '#312f3f': 'Navy',
-  '#353d77': 'Blue',
-  '#e4d6c5': 'Creme',
-  '#9cc0d5': 'Light Blue',
-  '#dd2020': 'Red',
-  '#5e504c': 'Dark Grey',
-  '#a0c640': 'Kiwi',
-  '#413d33': 'Army',
-  '#13290c': 'Forest Green',
-  '#fec6ca': 'Light Pink',
-  '#541e69': 'Purple',
-  '#581f33': 'Dark Red',
-  '#f89e2a': 'Gold',
-  '#575634': 'Moss Green',
-  '#403a3b': 'Charcoal Heather',
-};
-
-const nameToHex = {
-  Black: '#111011',
-  Green: '#016541',
-  Yellow: '#ffce6f',
-  White: '#fbfbfa',
-  'Heather Grey': '#b0b3b6',
-  'Denim Heather': '#263037',
-  Navy: '#312f3f',
-  Blue: '#353d77',
-  Creme: '#e4d6c5',
-  'Light Blue': '#9cc0d5',
-  Red: '#dd2020',
-  'Dark Grey': '#5e504c',
-  Kiwi: '#a0c640',
-  Army: '#413d33',
-  'Forest Green': '#13290c',
-  'Light Pink': '#fec6ca',
-  Purple: '#541e69',
-  'Dark Red': '#581f33',
-  Gold: '#f89e2a',
-  'Moss Green': '#575634',
-  'Charcoal Heather': '#403a3b',
-};
 
 //Default sizes
 const defaultSizeOptions = [
@@ -71,8 +23,6 @@ const defaultSizeOptions = [
   { value: 'XL', label: 'XL' },
   { value: 'XXL', label: 'XXL' },
 ];
-
-//Normalize data for displaying product information
 
 // const Schema = yup.object({
 //   name: yup
@@ -260,12 +210,8 @@ const ProductForm = () => {
             hexValue: c,
           }))
           .filter((c) => c.name && c.hexValue);
-        console.log('colors:');
-        console.log(colors);
-        let sizes = [
-          product.sizes,
-          selectedSizeOption?.map((s) => s.value),
-        ].join(',');
+        // console.log('colors:');
+        // console.log(colors);
         let pictures = product.pictures;
         if (inputPicture !== null) {
           console.log('inputPicture :' + inputPicture);
@@ -487,7 +433,7 @@ const ProductForm = () => {
                 if (e.target.value.length == 0) {
                   values.selectedColor = '';
                 }
-                setDisplayInput(e.target.value);
+                setDisplaySelect(e.target.value);
               }}
             />
             {errors.colors && touched.colors ? (
@@ -801,37 +747,6 @@ const ProductForm = () => {
 
 export default ProductForm;
 
-/*
-
-+-----------------------------------------------------------------+
-|     Created by Chirag Mehta - http://chir.ag/projects/ntc       |
-|-----------------------------------------------------------------|
-|               ntc js (Name that Color JavaScript)               |
-+-----------------------------------------------------------------+
-
-All the functions, code, lists etc. have been written specifically
-for the Name that Color JavaScript by Chirag Mehta unless otherwise
-specified.
-
-This script is released under the: Creative Commons License:
-Attribution 2.5 http://creativecommons.org/licenses/by/2.5/
-
-Sample Usage:
-
-  <script type="text/javascript" src="ntc.js"></script>
-
-  <script type="text/javascript">
-
-    var n_match  = ntc.name("#6195ED");
-    n_rgb        = n_match[0]; // This is the RGB value of the closest matching color
-    n_name       = n_match[1]; // This is the text string for the name of the match
-    n_exactmatch = n_match[2]; // True if exact color match, False if close-match
-
-    alert(n_match);
-
-  </script>
-
-*/
 
 var ntc = {
   init: function () {
@@ -897,8 +812,6 @@ var ntc = {
       : ['#' + ntc.names[cl][0], ntc.names[cl][1], false];
   },
 
-  // adopted from: Farbtastic 1.2
-  // http://acko.net/dev/farbtastic
   hsl: function (color) {
     var rgb = [
       parseInt('0x' + color.substring(1, 3)) / 255,
