@@ -105,7 +105,7 @@ const ProductForm = () => {
     const errors = {};
 
     let regExpName = /[a-zA-Z]/g;
-    let regExImageUrl = /(https?:\/\/.*\.(?:png|jpg))/i
+    let regExImageUrl = /(https?:\/\/.*\.(?:png|jpg))/i;
     if (!values.name) {
       errors.name = 'Name is required';
     } else if (values.name.length > 144) {
@@ -541,6 +541,7 @@ const ProductForm = () => {
               Size
             </label>
             <select
+              className="bg-white-50 mb-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-white-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-white-500 dark:focus:border-blue-500"
               name="size"
               value={selectedSize}
               onChange={(e) => {
@@ -588,7 +589,7 @@ const ProductForm = () => {
                 }}
                 type="button"
               >
-                Add Size
+                Add more size...
               </button>
             ) : null}
             {method == 'edit' ? (
@@ -690,6 +691,7 @@ const ProductForm = () => {
               }}
             /> */}
             <input
+              className="bg-white-50 mb-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-white-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-white-500 dark:focus:border-blue-500"
               type="date"
               name="featureFrom"
               id="featureFrom"
@@ -723,6 +725,7 @@ const ProductForm = () => {
               }}
             /> */}
             <input
+              className="bg-white-50 mb-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-white-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-white-500 dark:focus:border-blue-500"
               type="date"
               name="featureTo"
               id="featureTo"
