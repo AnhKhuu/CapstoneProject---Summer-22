@@ -5,8 +5,6 @@ import { useStore } from '../../store/hooks';
 import { addToCart } from '../../store/actions';
 import { useMutation, useQuery } from '@apollo/client';
 import { GET_PRODUCT } from '../../graphql/queries';
-import { ThirteenMp } from '@mui/icons-material';
-import { color } from '@mui/system';
 const Images = ({ url, pictures }) => {
   console.log(url);
   const Image = pictures[0 + url];

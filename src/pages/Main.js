@@ -40,7 +40,7 @@ const Main = () => {
         <button
           type="button"
           disabled={customerInput === ''}
-          onClick={() => handleClick('customer')}
+          onClick={() => handleClick('shoplist')}
         >
           Customer
         </button>

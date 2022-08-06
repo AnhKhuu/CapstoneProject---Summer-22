@@ -6,6 +6,7 @@ import {
   reduceQuantityInCart,
 } from '../../store/actions';
 import { AiOutlinePlusSquare, AiOutlineMinusSquare } from 'react-icons/ai';
+import { Link } from 'react-router-dom';
 
 const Cart = ({ setIsShowCart, cart }) => {
   const [state, dispatch] = useStore();
@@ -20,6 +21,8 @@ const Cart = ({ setIsShowCart, cart }) => {
     style: 'currency',
     currency: 'USD',
   });
+
+  const customerId = localStorage.getItem('customerId');
 
   const handleCloseCart = () => {
     cartRef.current.classList.remove('animate-fade-in');
@@ -52,7 +55,7 @@ const Cart = ({ setIsShowCart, cart }) => {
             >
               <img
                 className="w-[100px] h-[100px]"
-                src={item.img}
+                src={item.pictures[0]}
                 alt={item.name}
               />
               <p className="text-white font-bold w-6 h-6 rounded-full bg-blue-700">
@@ -80,6 +83,7 @@ const Cart = ({ setIsShowCart, cart }) => {
           ))}
           {cart.length > 0 && <p>Total: {DollarUsd.format(total(cart))} </p>}
         </div>
+        <Link to="/checkout">Checkout</Link>
       </div>
     </div>
   );

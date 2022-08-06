@@ -24,29 +24,6 @@ const defaultSizeOptions = [
   { value: 'XXL', label: 'XXL' },
 ];
 
-// const Schema = yup.object({
-//   name: yup
-//     .string()
-//     .min(2, 'Too short')
-//     .max(144, 'Too long')
-//     .required('Name is required'),
-//   price: yup
-//     .number('Must be a number')
-//     .positive('Must be positive')
-//     .integer('Must be integer')
-//     .required('Price is required'),
-//   stock: yup
-//     .number('Must be a number')
-//     .positive('Must be positive')
-//     .integer('Must be integer')
-//     .required('Stock is required'),
-//   colors: yup.string().required('Color is required'),
-//   description: yup.string().min(2, 'Too short').max(1000, 'Too long'),
-//   catergories: yup.string(),
-//   pictures: yup.string(),
-//   sizes: yup.string(),
-// });
-
 // Add/edit product form
 const ProductForm = () => {
   const [addProduct, { data, loading, errors }] = useMutation(ADD_PRODUCT, {

@@ -31,7 +31,7 @@ function Product({ product }) {
   return (
     <div className="flex flex-wrap relative w-64 h-auto bg-green-300 overflow-hidden mt-4 mb-4 mr-1 ml-1 rounded-lg">
       <div className="relative w-full flex justify-center items-center pt-5">
-        <img src={product.pictures} className="h-60 w-auto" />
+        <img src={product.pictures[0]} className="h-60 w-auto" />
       </div>
       <div className="relative p-5 flex justify-center items-center flex-col">
         <h3 className="text-center text-lg text-gray-500 font-bold uppercase">
