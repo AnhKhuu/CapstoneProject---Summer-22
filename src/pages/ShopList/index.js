@@ -47,6 +47,9 @@ const ShopList = () => {
 
   //Handle Add to Cart
   const handleAddToCart = (product) => {
+    if (product.sizes.length > 1 || product.colors.length > 1) {
+      alert('Please select size and color on product detail page');
+    }
     // setCart((prev) => {
     //   const findProductInCart = prev.find((item) => item.id === product.id);
 
@@ -93,7 +96,7 @@ const ShopList = () => {
               activeCategory={activeCategory}
               setActiveCategory={setActiveCategory}
               getCategory={data.products.map((item) => {
-                return { id: item.id, categories: item.categories };
+                return { categories: item.categories };
               })}
             />
           </div>

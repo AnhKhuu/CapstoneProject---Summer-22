@@ -1,6 +1,4 @@
-import React, { useEffect } from 'react';
-import { useQuery } from '@apollo/client';
-import { GET_CATEGORIES } from '../../graphql/queries';
+import React, { useEffect, useState } from 'react';
 
 const prices = [
   {
@@ -34,6 +32,7 @@ const Filters = ({
   setFilters,
   getCategory,
 }) => {
+  const [searchInput, setSearchInput] = useState('');
   useEffect(() => {
     if (activeCategory === 'All' && activePrice === '') {
       setFilters(products);
@@ -53,6 +52,7 @@ const Filters = ({
         ? item.price >= 1000 && item.price <= 1500
         : item.price > 1500
     );
+
     //let { getCategory } = this.state;
     //getCategory.push({ id:1, categories:"All"})
     //this.setState({getCategory: getCategory})
@@ -61,9 +61,20 @@ const Filters = ({
     //console.log(uniqueCategories);
     setFilters(filterPrice);
   }, [activeCategory, activePrice, products, setFilters]);
+
+  const handleOnKeyDown = products.filter((item) =>
+    searchInput == '' ? item : item.name == searchInput
+  );
+
   return (
     <div>
       <div className="ml-3">
+        <input
+          type="search"
+          placeholder="Search here"
+          onKeyDown={handleOnKeyDown}
+          value={searchInput}
+        />
         <h1 className="text-2xl tracking-tight text-gray-900">Categories</h1>
         {getCategory.map((item) => (
           <button
