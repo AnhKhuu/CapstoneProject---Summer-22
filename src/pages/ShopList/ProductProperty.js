@@ -28,7 +28,7 @@ const Option = ({ url, sizes, setActiveSize }) => {
     <div className=" mb-1 font-medium text-gray-900 px-2 py-3 ">
       <button
         onClick={() => setActiveSize(Size)}
-        className="text-gray-500 rounded-lg  hover:text-red-600 visited:text-black visited:font-bold"
+        className="text-gray-500 rounded-lg  hover:text-red-600 focus:text-black focus:font-bold"
       >
         {Size}
       </button>
@@ -43,7 +43,7 @@ const ColorOption = ({ url, colors, setActiveColor }) => {
     <div className=" mb-1 font-medium text-gray-900 px-2 py-3 ">
       <button
         onClick={() => setActiveColor(Color)}
-        className="text-gray-500 rounded-lg  hover:text-red-600 visited:text-black visited:font-bold"
+        className="text-gray-500 rounded-lg  hover:text-red-600 focus:text-black focus:font-bold"
       >
         {Color.name}
       </button>
