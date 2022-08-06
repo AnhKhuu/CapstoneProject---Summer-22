@@ -1,23 +1,4 @@
-import React, { useEffect } from 'react';
-
-const categories = [
-  {
-    id: 1,
-    name: 'All',
-  },
-  {
-    id: 2,
-    name: 'Phone',
-  },
-  {
-    id: 3,
-    name: 'Laptop',
-  },
-  {
-    id: 4,
-    name: 'Watch',
-  },
-];
+import React, { useEffect, useState } from 'react';
 
 const prices = [
   {
@@ -49,7 +30,9 @@ const Filters = ({
   setActivePrice,
   products,
   setFilters,
+  getCategory,
 }) => {
+  const [searchInput, setSearchInput] = useState('');
   useEffect(() => {
     if (activeCategory === 'All' && activePrice === '') {
       setFilters(products);
@@ -57,7 +40,7 @@ const Filters = ({
     }
 
     const filterCategory = products.filter((item) =>
-      activeCategory === 'All' ? item : item.category === activeCategory
+      activeCategory === 'All' ? item : item.categories == activeCategory
     );
 
     const filterPrice = filterCategory.filter((item) =>
@@ -70,22 +53,39 @@ const Filters = ({
         : item.price > 1500
     );
 
+    //let { getCategory } = this.state;
+    //getCategory.push({ id:1, categories:"All"})
+    //this.setState({getCategory: getCategory})
+    //console.log(getCategory)
+    //const uniqueCategories = [...new Set(getCategory.map(item => item.categories))];
+    //console.log(uniqueCategories);
     setFilters(filterPrice);
   }, [activeCategory, activePrice, products, setFilters]);
+
+  const handleOnKeyDown = products.filter((item) =>
+    searchInput == '' ? item : item.name == searchInput
+  );
+
   return (
     <div>
       <div className="ml-3">
+        <input
+          type="search"
+          placeholder="Search here"
+          onKeyDown={handleOnKeyDown}
+          value={searchInput}
+        />
         <h1 className="text-2xl tracking-tight text-gray-900">Categories</h1>
-        {categories.map((item) => (
+        {getCategory.map((item) => (
           <button
-            onClick={() => setActiveCategory(item.name)}
+            onClick={() => setActiveCategory(item.categories)}
             key={item.id}
             className={`flex mb-1 font-medium text-gray-900 px-2 py-3 ${
-              activeCategory === item.name &&
+              activeCategory === item.categories &&
               'font-medium text-orange-400 px-2 py-3'
             }`}
           >
-            {item.name}
+            {item.categories}
           </button>
         ))}
       </div>

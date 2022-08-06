@@ -9,6 +9,8 @@ import banner from '../../banner.jpg';
 import MainLayout from '../../layout/MainLayout';
 import { useStore } from '../../store/hooks';
 import { addToCart } from '../../store/actions';
+import { useMutation, useQuery } from '@apollo/client';
+import { GET_PRODUCTS } from '../../graphql/queries';
 
 const ShopList = () => {
   const [products, setProducts] = useState([]);
@@ -19,15 +21,19 @@ const ShopList = () => {
   const [activePrice, setActivePrice] = useState('');
   // const [isShowCart, setIsShowCart] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
   const [state, dispatch] = useStore();
-  useEffect(() => {
+  const { loading, error, data } = useQuery(GET_PRODUCTS);
+  // console.log({ error, data, loading });
+  console.log('DATA', data);
+  if (loading) return <div> Loading... </div>;
+  if (error) return <div> Something went wrong </div>;
+  /*useEffect(() => {
     const fetchProducts = async () => {
       setIsLoading(true);
       try {
-        const data = await fetch('https://phones-dev.herokuapp.com/api/phones');
-        const products = await data.json();
-
+        const { error, data, loading } = useQuery(GET_PRODUCTS);
+        const products = data.products;
+        console.log({ error, data, loading });      
         setProducts(products.data);
         setFilters(products.data);
         setIsLoading(false);
@@ -37,10 +43,13 @@ const ShopList = () => {
     };
 
     fetchProducts();
-  }, []);
+  }, []);*/
 
   //Handle Add to Cart
   const handleAddToCart = (product) => {
+    if (product.sizes.length > 1 || product.colors.length > 1) {
+      alert('Please select size and color on product detail page');
+    }
     // setCart((prev) => {
     //   const findProductInCart = prev.find((item) => item.id === product.id);
 
@@ -80,12 +89,15 @@ const ShopList = () => {
         <div className="grid grid-cols-5 gap-3">
           <div className="ml-auto relative col-span-1 w-full h-full bg-white shadow-xl py-4 pb-12 flex flex-col overflow-y-auto	">
             <Filters
-              products={products}
+              products={data.products}
               setFilters={setFilters}
               setActivePrice={setActivePrice}
               activePrice={activePrice}
               activeCategory={activeCategory}
               setActiveCategory={setActiveCategory}
+              getCategory={data.products.map((item) => {
+                return { categories: item.categories };
+              })}
             />
           </div>
 

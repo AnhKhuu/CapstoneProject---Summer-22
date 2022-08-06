@@ -10,7 +10,11 @@ const Product = ({ product, handleAddToCart }) => {
   return (
     <div className=" flex-1 flex flex-col self-stretch items-center min-w-[250px] px-2 mr-2 mb-2 rounded-lg">
       <div className="w-[100px]">
-        <img className="w-full h-full" src={product.img} alt={product.name} />
+        <img
+          className="w-full h-full"
+          src={product.pictures[0]}
+          alt={product.name}
+        />
       </div>
       <h3 className="text-gray-600">
         <Link to={{ pathname: `/shoplist/${product.id}` }}>{product.name}</Link>
