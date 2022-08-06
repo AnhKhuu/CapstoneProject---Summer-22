@@ -46,6 +46,8 @@ const Checkout = () => {
 
   const navigate = useNavigate();
 
+  const submitting = subTotal == 0 || !location || resultFee.loading || !name;
+
   // var groupBy = function (xs, key) {
   //   return xs.reduce(function (rv, x) {
   //     (rv[x[key]] = rv[x[key]] || []).push(x);
@@ -277,22 +279,26 @@ const Checkout = () => {
     (arr1, arr2, name, location) => {
       let compare = [];
       if (arr1.length > 0) {
+        if (arr1.length !== arr2.length) {
+          setIsShowModal(true);
+          return;
+        }
         compare = arr1?.map((item, index) => {
           return (
             Object.keys(item).length === Object.keys(arr2[index]).length &&
             Object.keys(item).every((p) => item[p] === arr2[index][p])
           );
         });
-      }
-      let result = compare.every((item) => item === true);
-      if (
-        !result ||
-        rawCustomerDetail.current.name !== name ||
-        rawCustomerDetail.current.location !== location
-      ) {
-        setIsShowModal(true);
-      } else {
-        navigate('/', { replace: true });
+        let result = compare.every((item) => item === true);
+        if (
+          !result ||
+          rawCustomerDetail.current.name !== name ||
+          rawCustomerDetail.current.location !== location
+        ) {
+          setIsShowModal(true);
+        } else {
+          navigate('/', { replace: true });
+        }
       }
     },
     [isShowModal]
@@ -334,7 +340,7 @@ const Checkout = () => {
       <MainLayout>
         <div className="my-10">
           <button
-            className="bg-slate-400"
+            className="px-3 py-1 rounded-md border-2 mb-3 hover:text-[#907c6e] font-semibold"
             onClick={() =>
               compareChange(rawCombineList.current, cartItems, name, location)
             }
@@ -343,47 +349,49 @@ const Checkout = () => {
           </button>
           <h1 className="font-bold text-3xl">Shopping Cart</h1>
           <div className="flex justify-between items-start">
-            <div className="w-[70%] border-2 mr-5 rounded-md">
-              <div className="w-full flex items-center border-b-2">
-                <p className="w-[15%] text-center font-semibold my-3"></p>
-                <p className="w-1/2 text-center font-semibold my-3">Products</p>
-                <p className="w-[15%] text-center font-semibold my-3">
-                  Quantity
-                </p>
-                <p className="w-[20%] text-center font-semibold my-3">Total</p>
-              </div>
+            <div className="w-[70%] mr-5">
               {cartItems.length > 0 ? (
-                <div className="w-full">
-                  <div className="w-[15%] text-center">
-                    <input
-                      className="cursor-pointer"
-                      type="checkbox"
-                      onChange={(event) => {
-                        dispatch(addAllToCheckout(event.target.checked));
-                      }}
-                      checked={checkoutState.every((item) => item === true)}
-                    />
+                <div className="border-2 rounded-md mt-3">
+                  <div className="w-full flex items-center border-b-2">
+                    <p className="w-[15%] text-center font-semibold my-3"></p>
+                    <p className="w-1/2 text-center font-semibold my-3">
+                      Products
+                    </p>
+                    <p className="w-[15%] text-center font-semibold my-3">
+                      Quantity
+                    </p>
+                    <p className="w-[20%] text-center font-semibold my-3">
+                      Total
+                    </p>
                   </div>
+                  <div className="w-full">
+                    <div className="w-[15%] text-center">
+                      <input
+                        className="cursor-pointer"
+                        type="checkbox"
+                        onChange={(event) => {
+                          dispatch(addAllToCheckout(event.target.checked));
+                        }}
+                        checked={checkoutState.every((item) => item === true)}
+                      />
+                    </div>
+                  </div>
+                  {cartItems?.map((item, index) => {
+                    return (
+                      <Item
+                        key={index}
+                        index={index}
+                        item={item}
+                        checkoutState={checkoutState}
+                      />
+                    );
+                  })}
                 </div>
               ) : (
-                ''
-              )}
-              {cartItems.length > 0 ? (
-                cartItems?.map((item, index) => {
-                  return (
-                    <Item
-                      key={index}
-                      index={index}
-                      item={item}
-                      checkoutState={checkoutState}
-                    />
-                  );
-                })
-              ) : (
-                <div>You have no item in your cart</div>
+                <div className="mt-3">You have no items in cart!</div>
               )}
             </div>
-            <div className="w-[30%] border-2 p-3 rounded-md">
+            <div className="w-[30%] border-2 p-3 rounded-md mt-3">
               <Formik
                 enableReinitialize
                 initialValues={{
@@ -443,7 +451,7 @@ const Checkout = () => {
                       component="div"
                     />
                     <div className="w-full border-t-2 mt-2">
-                      {cartItems.length > 0 ? (
+                      {cartItems.length > 0 && (
                         <div>
                           <div className="flex justify-between my-2">
                             <span>Subtotal</span>
@@ -470,19 +478,15 @@ const Checkout = () => {
                             </span>
                           </div>
                         </div>
-                      ) : (
-                        ''
                       )}
                     </div>
                     <div className="flex justify-end">
                       <button
+                        className={`border-2 py-1 px-2 font-semibold rounded-md mt-3 ${
+                          !submitting ? 'hover:text-[#907c6e]' : ''
+                        }`}
                         type="submit"
-                        disabled={
-                          subTotal == 0 ||
-                          !location ||
-                          resultFee.loading ||
-                          isSubmitting
-                        }
+                        disabled={submitting}
                       >
                         Checkout
                       </button>
@@ -500,7 +504,7 @@ const Checkout = () => {
           handleCancelButton={handleCancel}
           isHandleCloseButton={false}
           modalContent={{
-            content: 'Are you want to save your chaging before leaving?',
+            content: 'Are you want to save your changing before leaving?',
             buttonAccept: 'Save',
             buttonCancel: 'Cancel',
           }}
