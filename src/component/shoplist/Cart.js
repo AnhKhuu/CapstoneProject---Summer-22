@@ -6,6 +6,8 @@ import {
   reduceQuantityInCart,
 } from '../../store/actions';
 import { AiOutlinePlusSquare, AiOutlineMinusSquare } from 'react-icons/ai';
+import { useMutation } from '@apollo/client';
+import { UPDATE_CUSTOMER } from '../../graphql/mutations';
 
 const Cart = ({ setIsShowCart, cart }) => {
   const [state, dispatch] = useStore();
@@ -32,6 +34,16 @@ const Cart = ({ setIsShowCart, cart }) => {
   const handleRemoveFromCart = (index) => {
     dispatch(removeFromCart(index));
   };
+  const handleCheckout = (cart) => {
+    const customerId = state.customer.id;
+    const [updateCart, { data, loading, error }] = useMutation(
+      UPDATE_CUSTOMER,
+      {
+        variables: { customerId: customerId, items: cart },
+      }
+    );
+    handleClick('checkout');
+  };
 
   return (
     <div
@@ -52,7 +64,7 @@ const Cart = ({ setIsShowCart, cart }) => {
             >
               <img
                 className="w-[100px] h-[100px]"
-                src={item.img}
+                src={item.pictures[0]}
                 alt={item.name}
               />
               <p className="text-white font-bold w-6 h-6 rounded-full bg-blue-700">
@@ -80,6 +92,7 @@ const Cart = ({ setIsShowCart, cart }) => {
           ))}
           {cart.length > 0 && <p>Total: {DollarUsd.format(total(cart))} </p>}
         </div>
+        <button onClick={() => handleCheckout(cart)}>Checkout </button>
       </div>
     </div>
   );
