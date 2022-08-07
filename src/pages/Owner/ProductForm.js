@@ -505,17 +505,17 @@ const ProductForm = () => {
                   values.sizes += '';
                   setSize('');
                 } else {
+                  let arr = values.sizes.split(',');
+                  if (arr.includes(selectedSize)) {
+                    console.log('duplicate value: ' + selectedSize);
+                    return;
+                  }
                   if (values.sizes.length > 0) {
                     values.sizes += ',' + selectedSize;
                     setSize(size + ',' + selectedSize);
                   } else {
                     values.sizes += selectedSize;
                     setSize(size + selectedSize);
-                  }
-                  let arr = values.sizes.split(',');
-                  if (arr.includes(selectedSize)) {
-                    console.log('duplicate value: ' + selectedSize);
-                    return;
                   }
                 }
               }}
