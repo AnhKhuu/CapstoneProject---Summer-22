@@ -1,7 +1,7 @@
-// pop up when onclick delete
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 
+// pop up when onclick delete
 const DeleteConfirmation = ({
   showModal,
   hideModal,
