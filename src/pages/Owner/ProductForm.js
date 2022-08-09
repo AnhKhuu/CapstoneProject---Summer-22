@@ -57,7 +57,7 @@ const ProductForm = () => {
     if (product.pictures.length == 1) {
       pictureURLs = product.pictures[0];
     } else {
-      pictureURLs = product.pictures == [] ? '' : product.pictures.join(',');
+      pictureURLs = product.pictures == [] ? '' : product.pictures.join(';');
     }
     originalStartDate = product.featuringFrom;
     return {
@@ -180,7 +180,7 @@ const ProductForm = () => {
         let pictures = product.pictures;
         if (inputPicture !== null) {
           console.log('inputPicture :' + inputPicture);
-          pictures += ',' + inputPicture;
+          pictures += ';' + inputPicture;
         }
         let compareColor = colors.map((c) => c.hexValue).join(',');
         pictures = pictures.replace(/ /g, '');
@@ -195,7 +195,7 @@ const ProductForm = () => {
               price: product.price,
               stock: product.stock,
               categories: categoriesTrim,
-              pictures: pictures.split(','),
+              pictures: pictures.split(';'),
               sizes: sizeTrim,
               colors: colors,
             },
@@ -233,7 +233,7 @@ const ProductForm = () => {
             variables.product['categories'] = categoriesTrim;
           }
           if (pictures != originalValue.pictures) {
-            variables.product['pictures'] = pictures.split(',');
+            variables.product['pictures'] = pictures.split(';');
           }
           if (compareColor != originalValue.selectedColor) {
             variables.product['colors'] = colors;
@@ -447,7 +447,7 @@ const ProductForm = () => {
             <input
               className="bg-white-50 mb-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-white-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-white-500 dark:focus:border-blue-500"
               id="pictures"
-              placeholder="Enter picture URL"
+              placeholder="Enter picture URL, separated by semi-colon"
               type="text"
               value={values.pictures}
               onChange={handleChange}
