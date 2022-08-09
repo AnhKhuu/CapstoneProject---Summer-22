@@ -27,27 +27,25 @@ function Product({ product }) {
   const colors = product.colors.map((c) => c.name).join(', ');
 
   return (
-    <div className="flex flex-wrap relative w-64 h-auto bg-green-300 overflow-hidden mt-4 mb-4 mr-1 ml-1 rounded-lg">
-      <div className="relative w-full flex justify-center items-center pt-5">
-        <img src={product.pictures[0]} className="h-60 w-auto" />
+    <div className="w-64 h-auto bg-blue-200 rounded-lg ml-10 mr-10 mb-10 border-b-2 transform transition duration-500 hover:scale-110 hover:bg-blue-300 ">
+      <div className="relative w-full flex justify-center pt-5">
+        <img src={product.pictures[0]} className="h-auto w-auto" />
       </div>
       <div className="relative p-5 flex justify-center items-center flex-col">
-        <h3 className="text-center text-lg text-gray-500 font-bold uppercase">
+        <h3 className="text-center text-lg text-black font-bold uppercase">
           {product.name}
         </h3>
-        <h2 className="text-2xl text-black font-bold">
+        <h2 className="text-center text-lg text-black font-semibold">
           Price: {product.price}$
         </h2>
-        <h2 className="text-2xl text-black font-bold">
+        <h2 className="text-center text-lg text-black font-semibold">
           Stock: {product.stock}
         </h2>
-        <h2 className="text-2xl text-black font-bold text-center">
-          Colors: {colors}
-        </h2>
+        <h2 className="text-center text-lg text-black font-semibold">Colors: {colors}</h2>
       </div>
       <div className="inline-flex w-18 h-8 bg-transparent space-x-16 rounded-lg mb-4 ml-8">
         <button
-          className="w-auto h-10 block items-center py-2 px-3 text-sm font-medium text-center text-white bg-indigo-200 rounded-lg hover:bg-indigo-500 focus:ring-4 focus:outline-none focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800"
+          className="w-auto h-10 block items-center py-2 px-3 text-sm text-center text-white bg-blue-200 rounded-lg hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           onClick={() => setShowModal(true)}
         >
           Remove
@@ -60,7 +58,7 @@ function Product({ product }) {
           message={'Are you sure you want to delete this item?'}
         />
         <Link to={`/edit_product/${product.id}`}>
-          <button className="w-auto h-10 block items-center py-2 px-3 text-sm font-medium text-center text-white bg-indigo-200 rounded-lg hover:bg-indigo-500 focus:ring-4 focus:outline-none focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
+          <button className="w-auto h-10 block items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-200 rounded-lg hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
             Edit
           </button>
         </Link>
