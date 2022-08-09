@@ -19,66 +19,19 @@ const ShopList = () => {
 
   const [activeCategory, setActiveCategory] = useState('All');
   const [activePrice, setActivePrice] = useState('');
-  // const [isShowCart, setIsShowCart] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [state, dispatch] = useStore();
   const { loading, error, data } = useQuery(GET_PRODUCTS);
-  // console.log({ error, data, loading });
   console.log('DATA', data);
   if (loading) return <div> Loading... </div>;
   if (error) return <div> Something went wrong </div>;
-  /*useEffect(() => {
-    const fetchProducts = async () => {
-      setIsLoading(true);
-      try {
-        const { error, data, loading } = useQuery(GET_PRODUCTS);
-        const products = data.products;
-        console.log({ error, data, loading });      
-        setProducts(products.data);
-        setFilters(products.data);
-        setIsLoading(false);
-      } catch (err) {
-        setIsLoading(false);
-      }
-    };
 
-    fetchProducts();
-  }, []);*/
-
-  //Handle Add to Cart
   const handleAddToCart = (product) => {
     if (product.sizes.length > 1 || product.colors.length > 1) {
       alert('Please select size and color on product detail page');
     }
-    // setCart((prev) => {
-    //   const findProductInCart = prev.find((item) => item.id === product.id);
-
-    //   if (findProductInCart) {
-    //     return prev.map((item) =>
-    //       item.id === product.id ? { ...item, amount: item.amount + 1 } : item
-    //     );
-    //   }
-
-    //   //Firt
-    //   return [...prev, { ...product, amount: 1 }];
-    // });
     dispatch(addToCart(product));
   };
-
-  //Handle Remove from cart
-  // const handleRemoveFromCart = (id) => {
-  //   setCart((prev) => {
-  //     return prev.reduce((cal, item) => {
-  //       if (item.id === id) {
-  //         if (item.amount === 1) return cal;
-
-  //         return [...cal, { ...item, amount: item.amount - 1 }];
-  //       }
-
-  //       return [...cal, { ...item }];
-  //     }, []);
-  //   });
-  // };
 
   return (
     <>
@@ -95,9 +48,6 @@ const ShopList = () => {
               activePrice={activePrice}
               activeCategory={activeCategory}
               setActiveCategory={setActiveCategory}
-              getCategory={data.products.map((item) => {
-                return { categories: item.categories };
-              })}
             />
           </div>
 

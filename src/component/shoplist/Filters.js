@@ -30,7 +30,6 @@ const Filters = ({
   setActivePrice,
   products,
   setFilters,
-  getCategory,
 }) => {
   const [searchInput, setSearchInput] = useState('');
   useEffect(() => {
@@ -66,6 +65,14 @@ const Filters = ({
     searchInput == '' ? item : item.name == searchInput
   );
 
+  const category = [].concat.apply(
+    [],
+    products.map((item) => item.categories)
+  );
+
+  const groupByCategory = new Set([category]);
+  console.log('groupByCategory', groupByCategory);
+
   return (
     <div>
       <div className="ml-3">
@@ -76,16 +83,15 @@ const Filters = ({
           value={searchInput}
         />
         <h1 className="text-2xl tracking-tight text-gray-900">Categories</h1>
-        {getCategory.map((item) => (
+        {groupByCategory.map((item, index) => (
           <button
-            onClick={() => setActiveCategory(item.categories)}
-            key={item.id}
+            onClick={() => setActiveCategory(item)}
+            key={index}
             className={`flex mb-1 font-medium text-gray-900 px-2 py-3 ${
-              activeCategory === item.categories &&
-              'font-medium text-orange-400 px-2 py-3'
+              activeCategory === item && 'font-medium text-orange-400 px-2 py-3'
             }`}
           >
-            {item.categories}
+            {item}
           </button>
         ))}
       </div>

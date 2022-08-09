@@ -5,8 +5,6 @@ import { useStore } from '../../store/hooks';
 import { addToCart } from '../../store/actions';
 import { useMutation, useQuery } from '@apollo/client';
 import { GET_PRODUCT } from '../../graphql/queries';
-import { ThirteenMp } from '@mui/icons-material';
-import { color } from '@mui/system';
 const Images = ({ url, pictures }) => {
   console.log(url);
   const Image = pictures[0 + url];
@@ -68,7 +66,6 @@ const ProductProperty = () => {
       productId: ID,
     },
   });
-  console.log(data);
   if (loading) return <div> Loading... </div>;
   if (error) return <div> Something went wrong </div>;
   const handleAddToCart = (product) => {
