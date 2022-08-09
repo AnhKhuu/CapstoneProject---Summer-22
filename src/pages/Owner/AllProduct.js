@@ -15,7 +15,7 @@ function AllProducts() {
       <div>
         <Link to="/new_product">
           <div>
-            <button className="text-2xl font-semibold -ml-40 mt-4 border-2 rounded-md px-3 py-1 bg-blue-300 hover:text-gray-500">
+            <button className="text-2xl font-semibold text-brown -ml-40 mt-4 border-2 rounded-md px-3 py-1 bg-green-300 hover:text-gray-500">
               Add New
             </button>
           </div>

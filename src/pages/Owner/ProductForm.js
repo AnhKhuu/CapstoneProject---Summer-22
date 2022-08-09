@@ -269,7 +269,7 @@ const ProductForm = () => {
         } = props;
         return (
           <form
-            className="mb-6 w-2/4 h-3/4 bg-blue-200 rounded border border-gray-200 m-auto p-14 rounded-lg grid"
+            className="mb-6 w-2/4 h-3/4 bg-green-100 rounded border border-gray-200 m-auto p-14 rounded-lg grid hover:bg-green-200"
             onSubmit={handleSubmit}
           >
             <label
@@ -354,7 +354,7 @@ const ProductForm = () => {
             <br></br>
 
             <button
-              className="border-2 rounded-lg px-3 py-1 mr-4 mt-2 mb-2 bg-blue-300"
+              className="border-2 rounded-lg px-3 py-1 mr-4 mt-2 mb-2 bg-orange-200"
               onClick={(e) => {
                 e.preventDefault();
                 if (values.colors.length > 0) {
@@ -461,7 +461,7 @@ const ProductForm = () => {
             {/* Picture Add More */}
 
             <button
-              className="border-2 rounded-lg px-3 py-1 mr-4 mt-2 mb-2 bg-blue-300"
+              className="border-2 rounded-lg px-3 py-1 mr-4 mt-2 mb-2 bg-orange-200"
               onClick={(e) => {
                 e.preventDefault();
                 setDisplayInput(!displayInput);
@@ -498,7 +498,7 @@ const ProductForm = () => {
               {rowSizeValue}
             </select>
             <button
-              className="border-2 rounded-lg px-3 py-1 mr-4 mt-2 mb-2 bg-blue-300"
+              className="border-2 rounded-lg px-3 py-1 mr-4 mt-2 mb-2 bg-orange-200"
               onClick={(e) => {
                 e.preventDefault();
                 console.log('selectedSize: ' + selectedSize);
@@ -593,7 +593,7 @@ const ProductForm = () => {
             ) : null}
             <br></br>
             <button
-              className="border-2 rounded-lg px-3 py-1 mr-4 mt-2 mb-2 bg-blue-500 text-white font-bold
+              className="border-2 rounded-lg px-3 py-1 mr-4 mt-2 mb-2 bg-orange-400 text-white font-bold hover:bg-orange-300
             "
               type="submit"
               disabled={isSubmitting}

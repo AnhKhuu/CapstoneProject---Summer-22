@@ -27,7 +27,7 @@ function Product({ product }) {
   const colors = product.colors.map((c) => c.name).join(', ');
 
   return (
-    <div className="w-64 h-auto bg-blue-200 rounded-lg ml-10 mr-10 mb-10 border-b-2 transform transition duration-500 hover:scale-110 hover:bg-blue-300 ">
+    <div className="w-64 h-auto bg-green-200 rounded-lg ml-10 mr-10 mb-10 border-b-2 transform transition duration-500 hover:scale-110 hover:bg-green-100">
       <div className="relative w-full flex justify-center pt-5">
         <img src={product.pictures[0]} className="h-auto w-auto" />
       </div>
@@ -45,7 +45,7 @@ function Product({ product }) {
       </div>
       <div className="inline-flex w-18 h-8 bg-transparent space-x-16 rounded-lg mb-4 ml-8">
         <button
-          className="w-auto h-10 block items-center py-2 px-3 text-sm text-center text-white bg-blue-200 rounded-lg hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          className="w-auto h-10 block items-center py-2 px-3 text-sm text-center text-white bg-orange-100 rounded-lg hover:bg-orange-300 focus:ring-4 focus:outline-none focus:ring-orange-200 dark:bg-orange-400 dark:hover:bg-orange-500 dark:focus:ring-orange-600"
           onClick={() => setShowModal(true)}
         >
           Remove
@@ -58,7 +58,7 @@ function Product({ product }) {
           message={'Are you sure you want to delete this item?'}
         />
         <Link to={`/edit_product/${product.id}`}>
-          <button className="w-auto h-10 block items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-200 rounded-lg hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+          <button className="w-auto h-10 block items-center py-2 px-3 text-sm text-center text-white bg-orange-100 rounded-lg hover:bg-orange-300 focus:ring-4 focus:outline-none focus:ring-orange-200 dark:bg-orange-400 dark:hover:bg-orange-500 dark:focus:ring-orange-600">
             Edit
           </button>
         </Link>
