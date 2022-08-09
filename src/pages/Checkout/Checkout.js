@@ -93,31 +93,34 @@ const Checkout = () => {
           fetchPolicy: 'no-cache',
         });
         rawCustomerDetail.current = {
-          name: data.customer.name,
-          location: data.customer.location,
+          name: data?.customer.name,
+          location: data?.customer.location,
         };
-        setName(data.customer.name);
-        setLocation(data.customer.location);
-        const productId = data.customer.items.map((item) => {
+        setName(data?.customer.name);
+        setLocation(data?.customer.location);
+
+        const productId = data?.customer.items.map((item) => {
           return item.productId;
         });
         let productDetail = [];
-        for (const item of productId) {
-          const detail = await getProduct({
-            variables: {
-              productId: item,
-            },
-            fetchPolicy: 'no-cache',
-          });
-          productDetail.push(detail.data);
+        if (productId) {
+          for (const item of productId) {
+            const detail = await getProduct({
+              variables: {
+                productId: item,
+              },
+              fetchPolicy: 'no-cache',
+            });
+            productDetail.push(detail?.data);
+          }
         }
 
-        const combineCustomerProduct = productDetail.map((item, index) => {
+        const combineCustomerProduct = productDetail?.map((item, index) => {
           return {
             ...item.product,
-            quantity: data.customer.items[index].quantity,
-            color: data.customer.items[index].color,
-            size: data.customer.items[index].size,
+            quantity: data?.customer.items[index].quantity,
+            color: data?.customer.items[index].color,
+            size: data?.customer.items[index].size,
           };
         });
 
@@ -165,10 +168,10 @@ const Checkout = () => {
         //   dispatch(queryCartItems(listModify));
         // }
 
-        if (data.customer.location) {
+        if (data?.customer.location) {
           const fee = await getFee({
             variables: {
-              location: data.customer.location,
+              location: data?.customer.location,
             },
           });
           setFee(fee.data.fee);
@@ -182,16 +185,18 @@ const Checkout = () => {
 
   useEffect(() => {
     const getFeeData = async () => {
-      if (debounced.trim() == '') {
-        setFee({ shipping: 0, tax: 0 });
-        return;
+      if (debounced !== undefined) {
+        if (debounced.trim() === '') {
+          setFee({ shipping: 0, tax: 0 });
+          return;
+        }
+        const feeData = await getFee({
+          variables: {
+            location: debounced,
+          },
+        });
+        setFee(feeData?.data.fee);
       }
-      const feeData = await getFee({
-        variables: {
-          location: debounced,
-        },
-      });
-      setFee(feeData.data.fee);
     };
     getFeeData();
   }, [debounced]);
@@ -277,9 +282,13 @@ const Checkout = () => {
 
   const compareChange = useCallback(
     (arr1, arr2, name, location) => {
+      if (arr1 === null) {
+        navigate('/', { replace: true });
+        return;
+      }
       let compare = [];
-      if (arr1.length > 0) {
-        if (arr1.length !== arr2.length) {
+      if (arr1?.length > 0) {
+        if (arr1?.length !== arr2?.length) {
           setIsShowModal(true);
           return;
         }
@@ -340,20 +349,22 @@ const Checkout = () => {
       <MainLayout>
         <div className="my-10">
           <button
-            className="px-3 py-1 rounded-md border-2 mb-3 hover:text-[#907c6e] font-semibold"
+            className="rounded-md mb-3 hover:text-[#907c6e] font-semibold text-xl"
             onClick={() =>
               compareChange(rawCombineList.current, cartItems, name, location)
             }
           >
-            Back
+            &larr; Back
           </button>
-          <h1 className="font-bold text-3xl">Shopping Cart</h1>
+          <h1 className="font-bold text-3xl mb-3">Shopping Cart</h1>
           <div className="flex justify-between items-start">
             <div className="w-[70%] mr-5">
               {cartItems.length > 0 ? (
                 <div className="border-2 rounded-md mt-3">
                   <div className="w-full flex items-center border-b-2">
-                    <p className="w-[15%] text-center font-semibold my-3"></p>
+                    <p className="w-[15%] text-center font-semibold my-3">
+                      Choose
+                    </p>
                     <p className="w-1/2 text-center font-semibold my-3">
                       Products
                     </p>
@@ -391,110 +402,112 @@ const Checkout = () => {
                 <div className="mt-3">You have no items in cart!</div>
               )}
             </div>
-            <div className="w-[30%] border-2 p-3 rounded-md mt-3">
-              <Formik
-                enableReinitialize
-                initialValues={{
-                  name: resultCustomer.data?.customer.name,
-                  location: resultCustomer.data?.customer.location,
-                }}
-                validate={(values) => {
-                  const errors = {};
-                  if (!values.name) {
-                    errors.name = 'Please enter your name';
-                  } else if (values.name.length >= 50) {
-                    errors.name = 'Name must less than 50 characters';
-                  }
-                  if (!values.location) {
-                    errors.location = 'Please enter the location';
-                  } else if (values.location.length >= 20) {
-                    errors.name = 'Location must less than 20 characters';
-                  }
-                  return errors;
-                }}
-                onSubmit={(values) => {
-                  handleSubmit(values.name, values.location);
-                }}
-              >
-                {({ isSubmitting }) => (
-                  <Form>
-                    <div
-                      className="flex justify-between mb-2"
-                      onChange={(event) => setName(event.target.value)}
-                    >
-                      <label>Name:</label>
-                      <Field
-                        className="border-2 px-2 w-[70%] rounded-md"
-                        type="text"
-                        name="name"
-                      />
-                    </div>
-                    <ErrorMessage
-                      className="text-red-700 text-sm mb-2"
-                      name="name"
-                      component="div"
-                    />
-                    <div
-                      className="flex justify-between mb-2"
-                      onChange={(event) => setLocation(event.target.value)}
-                    >
-                      <label>Location:</label>
-                      <Field
-                        className="border-2 px-2 w-[70%] rounded-md"
-                        type="text"
-                        name="location"
-                      />
-                    </div>
-                    <ErrorMessage
-                      className="text-red-700 text-sm mb-2"
-                      name="location"
-                      component="div"
-                    />
-                    <div className="w-full border-t-2 mt-2">
-                      {cartItems.length > 0 && (
-                        <div>
-                          <div className="flex justify-between my-2">
-                            <span>Subtotal</span>
-                            <span className="font-bold">
-                              ${subTotal || '0'}
-                            </span>
-                          </div>
-                          <div className="flex justify-between mb-2">
-                            <span>Shipping</span>
-                            <span className="font-bold">
-                              ${fee?.shipping || '0'}
-                            </span>
-                          </div>
-                          <div className="flex justify-between mb-2">
-                            <span>Tax</span>
-                            <span className="font-bold">
-                              ${fee?.tax || '0'}
-                            </span>
-                          </div>
-                          <div className="flex justify-between mb-2">
-                            <span>Total</span>
-                            <span className="font-bold">
-                              ${subTotal + fee?.shipping + fee?.tax || '0'}
-                            </span>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                    <div className="flex justify-end">
-                      <button
-                        className={`border-2 py-1 px-2 font-semibold rounded-md mt-3 ${
-                          !submitting ? 'hover:text-[#907c6e]' : ''
-                        }`}
-                        type="submit"
-                        disabled={submitting}
+            {cartItems.length > 0 && (
+              <div className="w-[30%] border-2 p-3 rounded-md mt-3">
+                <Formik
+                  enableReinitialize
+                  initialValues={{
+                    name: resultCustomer.data?.customer.name,
+                    location: resultCustomer.data?.customer.location,
+                  }}
+                  validate={(values) => {
+                    const errors = {};
+                    if (!values.name) {
+                      errors.name = 'Please enter your name';
+                    } else if (values.name.length >= 50) {
+                      errors.name = 'Name must less than 50 characters';
+                    }
+                    if (!values.location) {
+                      errors.location = 'Please enter the location';
+                    } else if (values.location.length >= 20) {
+                      errors.name = 'Location must less than 20 characters';
+                    }
+                    return errors;
+                  }}
+                  onSubmit={(values) => {
+                    handleSubmit(values.name, values.location);
+                  }}
+                >
+                  {({ isSubmitting }) => (
+                    <Form>
+                      <div
+                        className="flex justify-between mb-2"
+                        onChange={(event) => setName(event.target.value)}
                       >
-                        Checkout
-                      </button>
-                    </div>
-                  </Form>
-                )}
-              </Formik>
-            </div>
+                        <label>Name:</label>
+                        <Field
+                          className="border-2 px-2 w-[70%] rounded-md"
+                          type="text"
+                          name="name"
+                        />
+                      </div>
+                      <ErrorMessage
+                        className="text-red-700 text-sm mb-2"
+                        name="name"
+                        component="div"
+                      />
+                      <div
+                        className="flex justify-between mb-2"
+                        onChange={(event) => setLocation(event.target.value)}
+                      >
+                        <label>Location:</label>
+                        <Field
+                          className="border-2 px-2 w-[70%] rounded-md"
+                          type="text"
+                          name="location"
+                        />
+                      </div>
+                      <ErrorMessage
+                        className="text-red-700 text-sm mb-2"
+                        name="location"
+                        component="div"
+                      />
+                      <div className="w-full border-t-2 mt-2">
+                        {cartItems.length > 0 && (
+                          <div>
+                            <div className="flex justify-between my-2">
+                              <span>Subtotal</span>
+                              <span className="font-bold">
+                                ${subTotal || '0'}
+                              </span>
+                            </div>
+                            <div className="flex justify-between mb-2">
+                              <span>Shipping</span>
+                              <span className="font-bold">
+                                ${fee?.shipping || '0'}
+                              </span>
+                            </div>
+                            <div className="flex justify-between mb-2">
+                              <span>Tax</span>
+                              <span className="font-bold">
+                                ${fee?.tax || '0'}
+                              </span>
+                            </div>
+                            <div className="flex justify-between mb-2">
+                              <span>Total</span>
+                              <span className="font-bold">
+                                ${subTotal + fee?.shipping + fee?.tax || '0'}
+                              </span>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                      <div className="flex justify-end">
+                        <button
+                          className={`py-1 px-2 font-semibold rounded-md mt-3 bg-[#907c6e] text-white ${
+                            !submitting ? 'hover:bg-[#ae9a8c]' : ''
+                          }`}
+                          type="submit"
+                          disabled={submitting}
+                        >
+                          Checkout
+                        </button>
+                      </div>
+                    </Form>
+                  )}
+                </Formik>
+              </div>
+            )}
           </div>
         </div>
         <ConfirmModal
