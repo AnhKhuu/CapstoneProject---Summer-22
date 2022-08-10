@@ -109,8 +109,6 @@ const ProductForm = () => {
 
     if (values.description.length > 1000) {
       errors.description = 'Description must be less than 1000 characters';
-    } else if (values.name.length < 2) {
-      errors.description = 'Description must be at least 2 characters';
     }
 
     if (values.featuringFrom != '' && values.featuringTo != '') {
