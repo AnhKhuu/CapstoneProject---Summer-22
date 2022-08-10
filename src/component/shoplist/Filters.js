@@ -66,7 +66,7 @@ const Filters = ({
         }
         setFilters(() =>
           products.filter((product) =>
-            product.name.toLowerCase().includes(debounced)
+            product.name.toLowerCase().includes(debounced.toLowerCase())
           )
         );
       }

@@ -29,6 +29,7 @@ const ShopList = () => {
   const handleAddToCart = (product) => {
     if (product.sizes.length > 1 || product.colors.length > 1) {
       alert('Please select size and color on product detail page');
+      return;
     }
     dispatch(addToCart(product));
   };
