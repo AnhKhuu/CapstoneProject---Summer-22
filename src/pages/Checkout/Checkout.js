@@ -139,8 +139,6 @@ const Checkout = () => {
     getFeeData();
   }, [debounced]);
 
-  console.log('cartItems', cartItems);
-
   const handleSubmit = async (name, location) => {
     try {
       await updateCustomer({
