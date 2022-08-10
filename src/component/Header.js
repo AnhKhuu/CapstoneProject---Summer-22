@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useStore } from '../store/hooks';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
-import { BiPhoneCall } from 'react-icons/bi';
 import Cart from './shoplist/Cart';
-// import logo from '/images/logo.jpg'
 
 const Header = () => {
   const [state, dispatch] = useStore();
@@ -13,12 +11,8 @@ const Header = () => {
 
   return (
     <div>
-      <nav className="h-28 w-full flex bg-[#FDF4EF] px-64 justify-between items-center">
-        <img src="/images/logo.jpg" className="h-28"></img>
-        <div className="flex items-center">
-          <Link to="/admin">Admin</Link>
-          <Link to="/checkout">Checkout</Link>
-        </div>
+      <nav className="h-28 w-full flex bg-[#FDF4EF] px-64 items-center">
+        <img src="/images/logo.jpg" className="h-28 "></img>
         <div
           className="relative mx-2"
           onClick={() => addToCartItems.length > 0 && setIsShowCart(true)}
