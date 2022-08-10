@@ -108,9 +108,9 @@ const ProductForm = () => {
     }
 
     if (values.description.length > 1000) {
-      errors.name = 'Description must be less than 1000 characters';
+      errors.description = 'Description must be less than 1000 characters';
     } else if (values.name.length < 2) {
-      errors.name = 'Description must be at least 2 characters';
+      errors.description = 'Description must be at least 2 characters';
     }
 
     if (values.featuringFrom != '' && values.featuringTo != '') {
@@ -122,7 +122,7 @@ const ProductForm = () => {
           errors.featuringTo = 'Date should be later than featuring from date';
         }
         if (values.featuringFrom < today) {
-          errors.featuringTo = 'Date should be at least from today';
+          errors.featuringFrom = 'Date should be at least from today';
         }
       }
     }
@@ -289,7 +289,7 @@ const ProductForm = () => {
               onChange={handleChange}
             />
             {errors.name && touched.name ? (
-              <div className="mt-2 text-sm text-red-600 dark:text-red-500">
+              <div className="mt-2 mb-2 text-sm text-red-600 dark:text-red-500">
                 {errors.name}
               </div>
             ) : null}
@@ -309,7 +309,7 @@ const ProductForm = () => {
               onChange={handleChange}
             />
             {errors.price && touched.price ? (
-              <div className="mt-2 text-sm text-red-600 dark:text-red-500">
+              <div className="mt-2 mb-2 text-sm text-red-600 dark:text-red-500">
                 {errors.price}
               </div>
             ) : null}
@@ -329,7 +329,7 @@ const ProductForm = () => {
               onChange={handleChange}
             />
             {errors.stock && touched.stock ? (
-              <div className="mt-2 text-sm text-red-600 dark:text-red-500">
+              <div className="mt-2 mb-2 text-sm text-red-600 dark:text-red-500">
                 {errors.stock}
               </div>
             ) : null}
@@ -394,7 +394,7 @@ const ProductForm = () => {
               }}
             />
             {errors.colors && touched.colors ? (
-              <div className="mt-2 text-sm text-red-600 dark:text-red-500">
+              <div className="mt-2 mb-2 text-sm text-red-600 dark:text-red-500">
                 {errors.colors}
               </div>
             ) : null}
@@ -414,7 +414,7 @@ const ProductForm = () => {
               onChange={handleChange}
             />
             {errors.description && touched.description ? (
-              <div className="mt-2 text-sm text-red-600 dark:text-red-500">
+              <div className="mt-2 mb-2 text-sm text-red-600 dark:text-red-500">
                 {errors.description}
               </div>
             ) : null}
@@ -434,7 +434,7 @@ const ProductForm = () => {
               onChange={handleChange}
             />
             {errors.categories && touched.categories ? (
-              <div className="mt-2 text-sm text-red-600 dark:text-red-500">
+              <div className="mt-2 mb-2 text-sm text-red-600 dark:text-red-500">
                 {errors.categories}
               </div>
             ) : null}
@@ -454,7 +454,7 @@ const ProductForm = () => {
               onChange={handleChange}
             />
             {errors.pictures && touched.pictures ? (
-              <div className="mt-2 text-sm text-red-600 dark:text-red-500">
+              <div className="mt-2 mb-2 text-sm text-red-600 dark:text-red-500">
                 {errors.pictures}
               </div>
             ) : null}
@@ -534,7 +534,7 @@ const ProductForm = () => {
             />
 
             {errors.sizes && touched.sizes ? (
-              <div className="mt-2 text-sm text-red-600 dark:text-red-500">
+              <div className="mt-2 mb-2 text-sm text-red-600 dark:text-red-500">
                 {errors.sizes}
               </div>
             ) : null}
@@ -561,7 +561,7 @@ const ProductForm = () => {
             ></input>
 
             {errors.featuringFrom && touched.featuringFrom && (
-              <div className="mt-2 text-sm text-red-600 dark:text-red-500">
+              <div className="mt-2 mb-2 text-sm text-red-600 dark:text-red-500">
                 {errors.featuringFrom}
               </div>
             )}
@@ -587,7 +587,7 @@ const ProductForm = () => {
             ></input>
 
             {errors.featuringTo && touched.featuringTo ? (
-              <div className="mt-2 text-sm text-red-600 dark:text-red-500">
+              <div className="mt-2 mb-2 text-sm text-red-600 dark:text-red-500">
                 {errors.featuringTo}
               </div>
             ) : null}
