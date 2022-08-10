@@ -12,16 +12,16 @@ function AllProducts() {
   if (error) return <div> Something went wrong </div>;
   return (
     <div>
-      <div className="w-64 flex  flex-col text-gray-400 text-normal font-normal text-left uppercase m-1 ml-4">
+      <div>
         <Link to="/new_product">
           <div>
-            <button className="text-2xl -ml-40 mt-10 bg-yellow-300 text-gray-600 font-bold block text-center cursor-pointer">
+            <button className="text-2xl font-semibold text-brown -ml-40 mt-4 border-2 rounded-md px-3 py-1 bg-green-300 hover:text-gray-500">
               Add New
             </button>
           </div>
         </Link>
       </div>
-      <div className="flex flex-wrap justify-between -mt-20 -mr-40 ml-10">
+      <div className="flex flex-wrap justify-around -mr-40 ml-10">
         {data.products.map((product) => (
           <Product key={product.id} product={product} />
         ))}

@@ -57,7 +57,7 @@ const ProductForm = () => {
     if (product.pictures.length == 1) {
       pictureURLs = product.pictures[0];
     } else {
-      pictureURLs = product.pictures == [] ? '' : product.pictures.join(',');
+      pictureURLs = product.pictures == [] ? '' : product.pictures.join(';');
     }
     originalStartDate = product.featuringFrom;
     return {
@@ -180,7 +180,7 @@ const ProductForm = () => {
         let pictures = product.pictures;
         if (inputPicture !== null) {
           console.log('inputPicture :' + inputPicture);
-          pictures += ',' + inputPicture;
+          pictures += ';' + inputPicture;
         }
         let compareColor = colors.map((c) => c.hexValue).join(',');
         pictures = pictures.replace(/ /g, '');
@@ -195,7 +195,7 @@ const ProductForm = () => {
               price: product.price,
               stock: product.stock,
               categories: categoriesTrim,
-              pictures: pictures.split(','),
+              pictures: pictures.split(';'),
               sizes: sizeTrim,
               colors: colors,
             },
@@ -233,7 +233,7 @@ const ProductForm = () => {
             variables.product['categories'] = categoriesTrim;
           }
           if (pictures != originalValue.pictures) {
-            variables.product['pictures'] = pictures.split(',');
+            variables.product['pictures'] = pictures.split(';');
           }
           if (compareColor != originalValue.selectedColor) {
             variables.product['colors'] = colors;
@@ -269,7 +269,7 @@ const ProductForm = () => {
         } = props;
         return (
           <form
-            className="mb-6 w-2/4 h-3/4 bg-orange-200 box-border m-auto p-12 rounded-lg"
+            className="mb-6 w-2/4 h-3/4 bg-green-100 rounded border border-gray-200 m-auto p-14 rounded-lg grid hover:bg-green-200"
             onSubmit={handleSubmit}
           >
             <label
@@ -277,10 +277,10 @@ const ProductForm = () => {
               htmlFor="name"
               style={{ display: 'block' }}
             >
-              Name
+              Name (*)
             </label>
             <input
-              className="bg-white-50 mb-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-white-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-white-500 dark:focus:border-blue-500"
+              className="mt-2 mb-2 bg-gray-100 border border-gray-200 rounded py-1 px-3 block focus:ring-blue-500 focus:border-blue-500 text-gray-700 w-full"
               id="name"
               placeholder="Enter product name"
               type="text"
@@ -298,10 +298,10 @@ const ProductForm = () => {
               htmlFor="price"
               style={{ display: 'block' }}
             >
-              Price
+              Price (*)
             </label>
             <input
-              className="bg-white-50 mb-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-white-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-white-500 dark:focus:border-blue-500"
+              className="mt-2 mb-2 bg-gray-100 border border-gray-200 rounded py-1 px-3 block focus:ring-blue-500 focus:border-blue-500 text-gray-700 w-full"
               id="price"
               placeholder="Enter price ($)"
               type="number"
@@ -318,10 +318,10 @@ const ProductForm = () => {
               htmlFor="stock"
               style={{ display: 'block' }}
             >
-              Stock
+              Stock (*)
             </label>
             <input
-              className="bg-white-50 mb-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-white-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-white-500 dark:focus:border-blue-500"
+              className="mt-2 mb-2 bg-gray-100 border border-gray-200 rounded py-1 px-3 block focus:ring-blue-500 focus:border-blue-500 text-gray-700 w-full"
               id="stock"
               placeholder="Enter stock"
               type="number"
@@ -338,11 +338,12 @@ const ProductForm = () => {
               htmlFor="color"
               style={{ display: 'block' }}
             >
-              Color
+              Color (*)
             </label>
 
             <input
               id="colors"
+              className="-mt-22 -mb-2"
               placeholder="Pick a color"
               type="color"
               onChange={(e) => {
@@ -353,7 +354,7 @@ const ProductForm = () => {
             <br></br>
 
             <button
-              className="text-sm italic font-thin"
+              className="border-2 rounded-lg px-3 py-1 mr-4 mt-2 mb-2 bg-orange-200"
               onClick={(e) => {
                 e.preventDefault();
                 if (values.colors.length > 0) {
@@ -375,11 +376,11 @@ const ProductForm = () => {
               }}
               type="button"
             >
-              Add Color
+              Add Color...
             </button>
 
             <input
-              className="bg-white-50 mb-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-white-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-white-500 dark:focus:border-blue-500"
+              className="mt-2 mb-2 bg-gray-100 border border-gray-200 rounded py-1 px-3 block focus:ring-blue-500 focus:border-blue-500 text-gray-700 w-full"
               id="colors"
               placeholder="Pick a color"
               type="text"
@@ -405,7 +406,7 @@ const ProductForm = () => {
               Description
             </label>
             <input
-              className="bg-white-50 mb-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-white-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-white-500 dark:focus:border-blue-500"
+              className="mt-2 mb-2 bg-gray-100 border border-gray-200 rounded py-1 px-3 block focus:ring-blue-500 focus:border-blue-500 text-gray-700 w-full"
               id="description"
               placeholder="Enter short description"
               type="text"
@@ -425,9 +426,9 @@ const ProductForm = () => {
               Categories
             </label>
             <input
-              className="bg-white-50 mb-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-white-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-white-500 dark:focus:border-blue-500"
+              className="mt-2 mb-2 bg-gray-100 border border-gray-200 rounded py-1 px-3 block focus:ring-blue-500 focus:border-blue-500 text-gray-700 w-full"
               id="categories"
-              placeholder="Enter Categories, separated by semicolon"
+              placeholder="Enter categories, separated by semi-colon"
               type="text"
               value={values.categories}
               onChange={handleChange}
@@ -445,9 +446,9 @@ const ProductForm = () => {
               Picture
             </label>
             <input
-              className="bg-white-50 mb-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-white-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-white-500 dark:focus:border-blue-500"
+              className="mt-2 mb-2 bg-gray-100 border border-gray-200 rounded py-1 px-3 block focus:ring-blue-500 focus:border-blue-500 text-gray-700 w-full"
               id="pictures"
-              placeholder="Enter picture URL"
+              placeholder="Enter picture URL, separated by semi-colon"
               type="text"
               value={values.pictures}
               onChange={handleChange}
@@ -460,17 +461,17 @@ const ProductForm = () => {
             {/* Picture Add More */}
 
             <button
-              className="text-sm italic font-thin"
+              className="border-2 rounded-lg px-3 py-1 mr-4 mt-2 mb-2 bg-orange-200"
               onClick={(e) => {
                 e.preventDefault();
                 setDisplayInput(!displayInput);
               }}
             >
-              Add more...
+              Add More...
             </button>
             {displayInput && (
               <input
-                className="bg-white-50 mb-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-white-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-white-500 dark:focus:border-blue-500"
+                className="mt-2 mb-2 bg-gray-100 border border-gray-200 rounded py-1 px-3 block focus:ring-blue-500 focus:border-blue-500 text-gray-700 w-full"
                 id="morepics"
                 placeholder="Enter picture URL"
                 type="text"
@@ -486,7 +487,7 @@ const ProductForm = () => {
               Size
             </label>
             <select
-              className="bg-white-50 mb-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-white-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-white-500 dark:focus:border-blue-500"
+              className="mt-2 mb-2 bg-gray-100 border border-gray-200 rounded py-1 px-3 block focus:ring-blue-500 focus:border-blue-500 text-gray-700 w-full"
               name="size"
               value={selectedSize}
               onChange={(e) => {
@@ -497,7 +498,7 @@ const ProductForm = () => {
               {rowSizeValue}
             </select>
             <button
-              className="text-sm italic font-thin"
+              className="border-2 rounded-lg px-3 py-1 mr-4 mt-2 mb-2 bg-orange-200"
               onClick={(e) => {
                 e.preventDefault();
                 console.log('selectedSize: ' + selectedSize);
@@ -521,10 +522,10 @@ const ProductForm = () => {
               }}
               type="button"
             >
-              Add size
+              Add Size...
             </button>
             <input
-              className="bg-white-50 mb-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-white-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-white-500 dark:focus:border-blue-500"
+              className="mt-2 mb-2 bg-gray-100 border border-gray-200 rounded py-1 px-3 block focus:ring-blue-500 focus:border-blue-500 text-gray-700 w-full"
               id="sizes"
               placeholder="Enter size"
               type="text"
@@ -547,7 +548,7 @@ const ProductForm = () => {
             </label>
 
             <input
-              className="bg-white-50 mb-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-white-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-white-500 dark:focus:border-blue-500"
+              className="mt-2 mb-2 bg-gray-100 border border-gray-200 rounded py-1 px-3 block focus:ring-blue-500 focus:border-blue-500 text-gray-700 w-full"
               type="date"
               name="featureFrom"
               id="featureFrom"
@@ -573,7 +574,7 @@ const ProductForm = () => {
             </label>
 
             <input
-              className="bg-white-50 mb-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-white-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-white-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-white-500 dark:focus:border-blue-500"
+              className="mt-2 mb-2 bg-gray-100 border border-gray-200 rounded py-1 px-3 block focus:ring-blue-500 focus:border-blue-500 text-gray-700 w-full"
               type="date"
               name="featureTo"
               id="featureTo"
@@ -592,7 +593,7 @@ const ProductForm = () => {
             ) : null}
             <br></br>
             <button
-              className="mt-4 p-12 inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-indigo-200 rounded-lg hover:bg-indigo-500 focus:ring-4 focus:outline-none focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800
+              className="border-2 rounded-lg px-3 py-1 mr-4 mt-2 mb-2 bg-orange-400 text-white font-bold hover:bg-orange-300
             "
               type="submit"
               disabled={isSubmitting}
