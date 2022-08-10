@@ -461,34 +461,38 @@ const Checkout = () => {
                   {({ isSubmitting }) => (
                     <Form>
                       <div
-                        className="flex justify-between mb-2"
+                        className="flex justify-between mb-4 items-center"
                         onChange={(event) => setName(event.target.value)}
                       >
-                        <label>Name:</label>
+                        <label className="text-gray-700 text-base font-bold">
+                          Name:
+                        </label>
                         <Field
-                          className="border-2 px-2 w-[70%] rounded-md"
+                          className="w-[70%] shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                           type="text"
                           name="name"
                         />
                       </div>
                       <ErrorMessage
-                        className="text-red-700 text-sm mb-2"
+                        className="text-red-500 text-xs italic mb-4"
                         name="name"
                         component="div"
                       />
                       <div
-                        className="flex justify-between mb-2"
+                        className="flex justify-between mb-4 items-center"
                         onChange={(event) => setLocation(event.target.value)}
                       >
-                        <label>Location:</label>
+                        <label className="text-gray-700 text-base font-bold">
+                          Location:
+                        </label>
                         <Field
-                          className="border-2 px-2 w-[70%] rounded-md"
+                          className="w-[70%] shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                           type="text"
                           name="location"
                         />
                       </div>
                       <ErrorMessage
-                        className="text-red-700 text-sm mb-2"
+                        className="text-red-500 text-xs italic mb-4"
                         name="location"
                         component="div"
                       />
