@@ -139,98 +139,101 @@ const Checkout = () => {
     getFeeData();
   }, [debounced]);
 
-  const handleSubmit = async (name, location) => {
-    try {
-      await updateCustomer({
-        variables: {
-          customer: {
-            customerId: customerId,
-            name: name,
-            location: location,
-          },
-        },
-      });
-
-      const addCheckoutField = cartItems.map((item, index) =>
-        checkoutState[index]
-          ? { ...item, checkout: true }
-          : { ...item, checkout: false }
-      );
-
-      const groupByListFinal = [
-        ...addCheckoutField
-          .reduce((prev, curr) => {
-            const key = curr.id + '-' + curr.checkout;
-
-            const item =
-              prev.get(key) ||
-              Object.assign({}, curr, {
-                quantity: 0,
-              });
-
-            item.quantity += curr.quantity;
-
-            return prev.set(key, item);
-          }, new Map())
-          .values(),
-      ];
-
-      groupByListFinal.map((item) => {
-        if (item.checkout === true) {
-          updateProduct({
-            variables: {
-              product: {
-                id: item.id,
-                stock: item.stock - item.quantity,
-              },
+  const handleSubmit = useCallback(
+    async (name, location) => {
+      try {
+        await updateCustomer({
+          variables: {
+            customer: {
+              customerId: customerId,
+              name: name,
+              location: location,
             },
-          });
-        }
-      });
-
-      await emptyCart({
-        variables: {
-          customerId: customerId,
-        },
-      });
-      let listNoCheckoutItems = [];
-
-      cartItems.map((item, index) => {
-        if (checkoutState[index]) {
-          return;
-        } else {
-          listNoCheckoutItems.push(item);
-          return;
-        }
-      });
-
-      let data = listNoCheckoutItems.map((item) => {
-        return {
-          productId: item.id,
-          color: item.color,
-          size: item.size,
-          quantity: item.quantity,
-        };
-      });
-
-      await updateCustomer({
-        variables: {
-          customer: {
-            customerId: customerId,
-            items: data,
           },
-        },
-      });
-      navigate('/congratulations', { replace: true });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+        });
+
+        const addCheckoutField = cartItems.map((item, index) =>
+          checkoutState[index]
+            ? { ...item, checkout: true }
+            : { ...item, checkout: false }
+        );
+
+        const groupByListFinal = [
+          ...addCheckoutField
+            .reduce((prev, curr) => {
+              const key = curr.id + '-' + curr.checkout;
+
+              const item =
+                prev.get(key) ||
+                Object.assign({}, curr, {
+                  quantity: 0,
+                });
+
+              item.quantity += curr.quantity;
+
+              return prev.set(key, item);
+            }, new Map())
+            .values(),
+        ];
+
+        groupByListFinal.map((item) => {
+          if (item.checkout === true) {
+            updateProduct({
+              variables: {
+                product: {
+                  id: item.id,
+                  stock: item.stock - item.quantity,
+                },
+              },
+            });
+          }
+        });
+
+        await emptyCart({
+          variables: {
+            customerId: customerId,
+          },
+        });
+        let listNoCheckoutItems = [];
+
+        cartItems.map((item, index) => {
+          if (checkoutState[index]) {
+            return;
+          } else {
+            listNoCheckoutItems.push(item);
+            return;
+          }
+        });
+
+        let data = listNoCheckoutItems.map((item) => {
+          return {
+            productId: item.id,
+            color: item.color,
+            size: item.size,
+            quantity: item.quantity,
+          };
+        });
+
+        await updateCustomer({
+          variables: {
+            customer: {
+              customerId: customerId,
+              items: data,
+            },
+          },
+        });
+        navigate('/congratulations', { replace: true });
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    [cartItems, name, location]
+  );
 
   const compareChange = useCallback(
     (arr1, arr2, name, location) => {
       if (arr1 === null) {
-        navigate('/', { replace: true });
+        navigate('/shoplist', { replace: true });
         return;
       }
       let compare = [];
@@ -253,42 +256,45 @@ const Checkout = () => {
         ) {
           setIsShowModal(true);
         } else {
-          navigate('/', { replace: true });
+          navigate('/shoplist', { replace: true });
         }
       }
     },
-    [isShowModal]
+    [isShowModal, name, location]
   );
 
-  const handleSave = useCallback(async (name, location) => {
-    try {
-      const updateCartItems = cartItems.map((item) => {
-        return {
-          productId: item.id,
-          color: item.color,
-          size: item.size,
-          quantity: item.quantity,
-        };
-      });
-      await updateCustomer({
-        variables: {
-          customer: {
-            customerId: customerId,
-            name: name,
-            location: location,
-            items: updateCartItems,
+  const handleSave = useCallback(
+    async (name, location) => {
+      try {
+        const updateCartItems = cartItems.map((item) => {
+          return {
+            productId: item.id,
+            color: item.color,
+            size: item.size,
+            quantity: item.quantity,
+          };
+        });
+        await updateCustomer({
+          variables: {
+            customer: {
+              customerId: customerId,
+              name: name,
+              location: location,
+              items: updateCartItems,
+            },
           },
-        },
-      });
-      navigate('/', { replace: true });
-    } catch (error) {
-      console.log(error);
-    }
-  });
+        });
+        navigate('/shoplist', { replace: true });
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    [name, location]
+  );
 
   const handleCancel = useCallback(() => {
     setIsShowModal(false);
-    navigate('/', { replace: true });
+    navigate('/shoplist', { replace: true });
   }, [isShowModal]);
 
   const handleBeforeUnload = (e) => {

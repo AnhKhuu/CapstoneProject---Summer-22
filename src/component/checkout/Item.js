@@ -12,20 +12,23 @@ const Item = ({ item, index, checkoutState }) => {
   const [isShowModal, setIsShowModal] = useState(false);
   const [state, dispatch] = useStore();
 
-  const handleModify = (type) => {
-    if (type === 'increment' && item.quantity >= item.stock) {
-      alert('The number of products has reached the limit!');
-      return;
-    }
-    if (type === 'decrement' && item.quantity <= 1) {
-      setIsShowModal(true);
-    }
-    if (type === 'increment') {
-      dispatch(increment(index));
-    } else {
-      dispatch(decrement(index));
-    }
-  };
+  const handleModify = useCallback(
+    (type) => {
+      if (type === 'increment' && item.quantity >= item.stock) {
+        alert('The number of products has reached the limit!');
+        return;
+      }
+      if (type === 'decrement' && item.quantity <= 1) {
+        setIsShowModal(true);
+      }
+      if (type === 'increment') {
+        dispatch(increment(index));
+      } else {
+        dispatch(decrement(index));
+      }
+    },
+    [item.quantity, item.stock, isShowModal]
+  );
 
   const handleRemoveItem = useCallback(() => {
     dispatch(removeItem(index));
