@@ -17,7 +17,7 @@ const ConfirmModal = ({
       <div className="bg-white rounded-md px-5 relative ease-in-out duration-[5000ms] w-1/3 py-3">
         <p>{modalContent.content}</p>
         <span
-          className="absolute top-0 right-5 duration-200 text-3xl cursor-pointer"
+          className="absolute top-0 right-5 duration-200 text-3xl cursor-pointer hover:text-[#907c6e]"
           onClick={
             isHandleCloseButton
               ? () => handleCancelButton()
@@ -28,12 +28,15 @@ const ConfirmModal = ({
         </span>
         <div className="text-right mt-3">
           <button
-            className="border-2 rounded-lg px-3 py-1 mr-4"
+            className="rounded-lg px-3 py-1 mr-4 bg-[#907c6e] text-white hover:bg-[#ae9a8c]"
             onClick={() => handleAcceptButton()}
           >
             Yes
           </button>
-          <button className="text-red-600" onClick={() => handleCancelButton()}>
+          <button
+            className="text-red-600 hover:text-red-400"
+            onClick={() => handleCancelButton()}
+          >
             No
           </button>
         </div>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useDebounce } from '../../store/hooks';
 
 const prices = [
   {
@@ -32,6 +33,7 @@ const Filters = ({
   setFilters,
 }) => {
   const [searchInput, setSearchInput] = useState('');
+  const debounced = useDebounce(searchInput, 500);
   useEffect(() => {
     if (activeCategory === 'All' && activePrice === '') {
       setFilters(products);
@@ -52,14 +54,25 @@ const Filters = ({
         : item.price > 1500
     );
 
-    //let { getCategory } = this.state;
-    //getCategory.push({ id:1, categories:"All"})
-    //this.setState({getCategory: getCategory})
-    //console.log(getCategory)
-    //const uniqueCategories = [...new Set(getCategory.map(item => item.categories))];
-    //console.log(uniqueCategories);
     setFilters(filterPrice);
   }, [activeCategory, activePrice, products, setFilters]);
+
+  useEffect(() => {
+    const getSearchData = async () => {
+      if (debounced !== undefined) {
+        if (debounced.trim() === '') {
+          setFilters(products);
+          return;
+        }
+        setFilters(() =>
+          products.filter((product) =>
+            product.name.toLowerCase().includes(debounced)
+          )
+        );
+      }
+    };
+    getSearchData();
+  }, [debounced]);
 
   const handleOnKeyDown = products.filter((item) =>
     searchInput == '' ? item : item.name == searchInput
@@ -70,8 +83,8 @@ const Filters = ({
     products.map((item) => item.categories)
   );
 
-  const groupByCategory = new Set([category]);
-  console.log('groupByCategory', groupByCategory);
+  const groupByCategory = new Set(category);
+  const arrCategory = Array.from(groupByCategory);
 
   return (
     <div>
@@ -79,11 +92,10 @@ const Filters = ({
         <input
           type="search"
           placeholder="Search here"
-          onKeyDown={handleOnKeyDown}
-          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
         />
         <h1 className="text-2xl tracking-tight text-gray-900">Categories</h1>
-        {groupByCategory.map((item, index) => (
+        {arrCategory.map((item, index) => (
           <button
             onClick={() => setActiveCategory(item)}
             key={index}

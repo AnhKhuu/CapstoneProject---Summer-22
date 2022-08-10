@@ -7,21 +7,26 @@ import {
 } from '../../store/actions';
 import { AiOutlinePlusSquare, AiOutlineMinusSquare } from 'react-icons/ai';
 import { useMutation } from '@apollo/client';
+import { useNavigate } from 'react-router-dom';
 import { UPDATE_CUSTOMER } from '../../graphql/mutations';
 
 const Cart = ({ setIsShowCart, cart }) => {
   const [state, dispatch] = useStore();
   const cartRef = useRef();
+  const [updateCart, { data, loading, error }] = useMutation(UPDATE_CUSTOMER);
   const total = (arr) => {
     return arr.reduce((cal, item) => {
       return cal + item.price * item.amount;
     }, 0);
   };
+  const navigate = useNavigate();
 
   const DollarUsd = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
   });
+
+  const customerId = localStorage.getItem('customerId');
 
   const handleCloseCart = () => {
     cartRef.current.classList.remove('animate-fade-in');
@@ -34,15 +39,25 @@ const Cart = ({ setIsShowCart, cart }) => {
   const handleRemoveFromCart = (index) => {
     dispatch(removeFromCart(index));
   };
-  const handleCheckout = (cart) => {
-    const customerId = state.customer.id;
-    const [updateCart, { data, loading, error }] = useMutation(
-      UPDATE_CUSTOMER,
-      {
-        variables: { customerId: customerId, items: cart },
-      }
-    );
-    handleClick('checkout');
+
+  const handleCheckout = async (cart) => {
+    const cartUpdate = cart.map((item) => {
+      return {
+        productId: item.id,
+        color: item.colors.name,
+        size: item.sizes,
+        quantity: item.amount,
+      };
+    });
+    await updateCart({
+      variables: {
+        customer: {
+          customerId: customerId,
+          items: cartUpdate,
+        },
+      },
+    });
+    navigate('/checkout', { replace: true });
   };
 
   return (
@@ -92,7 +107,14 @@ const Cart = ({ setIsShowCart, cart }) => {
           ))}
           {cart.length > 0 && <p>Total: {DollarUsd.format(total(cart))} </p>}
         </div>
-        <button onClick={() => handleCheckout(cart)}>Checkout </button>
+        <div className="text-center">
+          <button
+            className="py-1 px-2 font-semibold rounded-md mt-3 bg-[#907c6e] text-white"
+            onClick={() => handleCheckout(cart)}
+          >
+            Checkout{' '}
+          </button>
+        </div>
       </div>
     </div>
   );
