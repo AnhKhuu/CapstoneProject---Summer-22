@@ -5,77 +5,79 @@ const Footer = () => {
     <footer className="bg-[#FDF4EF] h-80 px-64 flex items-center">
       <div className="flex w-full justify-between">
         <div className="w-1/4">
-          <span className="block mb-3 font-semibold">Shop</span>
-          <a href="#" className="block hover:underline mb-3 ">
+          <span className="block text-[#907c6e] mb-3 font-semibold">Shop</span>
+          <a href="#" className="block text-[#907c6e] hover:underline mb-3 ">
             Gift Guides
           </a>
-          <a href="#" className="block hover:underline mb-3 ">
+          <a href="#" className="block text-[#907c6e] hover:underline mb-3 ">
             Fan Art
           </a>
-          <a href="#" className="block hover:underline mb-3 ">
+          <a href="#" className="block text-[#907c6e] hover:underline mb-3 ">
             New Works
           </a>
-          <a href="#" className="block hover:underline mb-3 ">
+          <a href="#" className="block text-[#907c6e] hover:underline mb-3 ">
             Blog
           </a>
-          <a href="#" className="block hover:underline mb-3 ">
+          <a href="#" className="block text-[#907c6e] hover:underline mb-3 ">
             Student Discount
           </a>
-          <a href="#" className="block hover:underline mb-3 ">
+          <a href="#" className="block text-[#907c6e] hover:underline mb-3 ">
             Bulk Orders
           </a>
         </div>
         <div className="w-1/4">
-          <span className="block mb-3 font-semibold">About</span>
-          <a href="#" className="block hover:underline mb-3 ">
+          <span className="block text-[#907c6e] mb-3 font-semibold">About</span>
+          <a href="#" className="block text-[#907c6e] hover:underline mb-3 ">
             About Us
           </a>
-          <a href="#" className="block hover:underline mb-3 ">
+          <a href="#" className="block text-[#907c6e] hover:underline mb-3 ">
             Social Responsibility
           </a>
-          <a href="#" className="block hover:underline mb-3 ">
+          <a href="#" className="block text-[#907c6e] hover:underline mb-3 ">
             Partner Program
           </a>
-          <a href="#" className="block hover:underline mb-3 ">
+          <a href="#" className="block text-[#907c6e] hover:underline mb-3 ">
             Affiliates
           </a>
-          <a href="#" className="block hover:underline mb-3 ">
+          <a href="#" className="block text-[#907c6e] hover:underline mb-3 ">
             Sell your art
           </a>
-          <a href="#" className="block hover:underline mb-3 ">
+          <a href="#" className="block text-[#907c6e] hover:underline mb-3 ">
             Jobs
           </a>
-          <a href="#" className="block hover:underline mb-3 ">
+          <a href="#" className="block text-[#907c6e] hover:underline mb-3 ">
             Artist Blog
           </a>
         </div>
         <div className="w-1/4">
-          <span className="block mb-3 font-semibold">Help</span>
-          <a href="#" className="block hover:underline mb-3 ">
+          <span className="block text-[#907c6e] mb-3 font-semibold">Help</span>
+          <a href="#" className="block text-[#907c6e] hover:underline mb-3 ">
             Delivery
           </a>
-          <a href="#" className="block hover:underline mb-3 ">
+          <a href="#" className="block text-[#907c6e] hover:underline mb-3 ">
             Returns
           </a>
-          <a href="#" className="block hover:underline mb-3 ">
+          <a href="#" className="block text-[#907c6e] hover:underline mb-3 ">
             Help Center
           </a>
-          <a href="#" className="block hover:underline mb-3 ">
+          <a href="#" className="block text-[#907c6e] hover:underline mb-3 ">
             Guidelines
           </a>
-          <a href="#" className="block hover:underline mb-3 ">
+          <a href="#" className="block text-[#907c6e] hover:underline mb-3 ">
             Copyright
           </a>
-          <a href="#" className="block hover:underline mb-3 ">
+          <a href="#" className="block text-[#907c6e] hover:underline mb-3 ">
             Investor Center
           </a>
-          <a href="#" className="block hover:underline mb-3 ">
+          <a href="#" className="block text-[#907c6e] hover:underline mb-3 ">
             Contact Us
           </a>
         </div>
         <div className="w-1/4">
-          <span className="block mb-3 font-semibold">Social</span>
-          <a href="#" className="block hover:underline mb-3 ">
+          <span className="block text-[#907c6e] mb-3 font-semibold">
+            Social
+          </span>
+          <a href="#" className="block text-[#907c6e] hover:underline mb-3 ">
             <svg
               className="w-7 mr-2 inline-block"
               fill="none"
@@ -93,7 +95,7 @@ const Footer = () => {
             </svg>
             Instagram
           </a>
-          <a href="#" className="block hover:underline mb-3 ">
+          <a href="#" className="block text-[#907c6e] hover:underline mb-3 ">
             <svg
               className="w-7 mr-2 inline-block"
               viewBox="0 0 24 24"
@@ -107,7 +109,7 @@ const Footer = () => {
             </svg>
             Facebook
           </a>
-          <a href="#" className="block hover:underline mb-3 ">
+          <a href="#" className="block text-[#907c6e] hover:underline mb-3 ">
             <svg
               className="w-7 mr-2 inline-block"
               fill="none"
@@ -121,7 +123,7 @@ const Footer = () => {
             </svg>
             Twitter
           </a>
-          <a href="#" className="block hover:underline mb-3 ">
+          <a href="#" className="block text-[#907c6e] hover:underline mb-3 ">
             <svg
               className="w-7 mr-2 inline-block"
               fill="none"
@@ -135,7 +137,7 @@ const Footer = () => {
             </svg>
             Tumblr
           </a>
-          <a href="#" className="block hover:underline mb-3 ">
+          <a href="#" className="block text-[#907c6e] hover:underline mb-3 ">
             <svg
               className="w-7 mr-2 inline-block"
               fill="none"
