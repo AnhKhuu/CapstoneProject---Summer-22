@@ -45,7 +45,7 @@ function Product({ product }) {
       </div>
       <div className="inline-flex w-18 h-8 bg-transparent space-x-16 rounded-lg mb-4 ml-8">
         <button
-          className="w-auto h-10 block items-center py-2 px-3 text-sm text-center text-white bg-orange-100 rounded-lg hover:bg-orange-300 focus:ring-4 focus:outline-none focus:ring-orange-200 dark:bg-orange-400 dark:hover:bg-orange-500 dark:focus:ring-orange-600"
+          className="w-auto h-10 block items-center py-2 px-3 text-sm text-center text-{#927f75} font-semibold bg-orange-100 hover:bg-orange-200 rounded-lg shadow-lg"
           onClick={() => setShowModal(true)}
         >
           Remove
@@ -58,7 +58,7 @@ function Product({ product }) {
           message={'Are you sure you want to delete this item?'}
         />
         <Link to={`/edit_product/${product.id}`}>
-          <button className="w-auto h-10 block items-center py-2 px-3 text-sm text-center text-white bg-orange-100 rounded-lg hover:bg-orange-300 focus:ring-4 focus:outline-none focus:ring-orange-200 dark:bg-orange-400 dark:hover:bg-orange-500 dark:focus:ring-orange-600">
+          <button className="w-auto h-10 block items-center py-2 px-3 text-sm text-center text-{#927f75} rounded-lg font-semibold bg-orange-100 hover:bg-orange-200 shadow-lg">
             Edit
           </button>
         </Link>
