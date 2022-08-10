@@ -139,7 +139,9 @@ const Checkout = () => {
     getFeeData();
   }, [debounced]);
 
-  const handleSubmit = useCallback(async (name, location) => {
+  console.log('cartItems', cartItems);
+
+  const handleSubmit = async (name, location) => {
     try {
       await updateCustomer({
         variables: {
@@ -150,9 +152,34 @@ const Checkout = () => {
           },
         },
       });
-      await cartItems.map((item, index) => {
-        if (checkoutState[index]) {
-          return updateProduct({
+
+      const addCheckoutField = cartItems.map((item, index) =>
+        checkoutState[index]
+          ? { ...item, checkout: true }
+          : { ...item, checkout: false }
+      );
+
+      const groupByListFinal = [
+        ...addCheckoutField
+          .reduce((prev, curr) => {
+            const key = curr.id + '-' + curr.checkout;
+
+            const item =
+              prev.get(key) ||
+              Object.assign({}, curr, {
+                quantity: 0,
+              });
+
+            item.quantity += curr.quantity;
+
+            return prev.set(key, item);
+          }, new Map())
+          .values(),
+      ];
+
+      groupByListFinal.map((item) => {
+        if (item.checkout === true) {
+          updateProduct({
             variables: {
               product: {
                 id: item.id,
@@ -162,6 +189,7 @@ const Checkout = () => {
           });
         }
       });
+
       await emptyCart({
         variables: {
           customerId: customerId,
@@ -199,7 +227,7 @@ const Checkout = () => {
     } catch (error) {
       console.log(error);
     }
-  }, []);
+  };
 
   const compareChange = useCallback(
     (arr1, arr2, name, location) => {

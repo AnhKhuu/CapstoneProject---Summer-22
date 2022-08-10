@@ -14,7 +14,7 @@ const Item = ({ item, index, checkoutState }) => {
 
   const handleModify = (type) => {
     if (type === 'increment' && item.quantity >= item.stock) {
-      alert('Item quantity reach limitation!');
+      alert('The number of products has reached the limit!');
       return;
     }
     if (type === 'decrement' && item.quantity <= 1) {
