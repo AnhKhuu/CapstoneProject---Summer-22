@@ -10,9 +10,6 @@ const Header = () => {
   const { addToCartItems } = state;
   const [isShowCart, setIsShowCart] = useState(false);
   const location = useLocation();
-
-  console.log(location.pathname);
-
   return (
     <div>
       <nav className="h-28 w-full flex bg-[#FDF4EF] px-64 items-center justify-between">
