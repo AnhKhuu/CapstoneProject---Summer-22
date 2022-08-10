@@ -354,7 +354,7 @@ const ProductForm = () => {
             <br></br>
 
             <button
-              className="border-2 rounded-lg px-3 py-1 mr-4 mt-2 mb-2 bg-orange-200"
+              className="border-2 rounded-lg px-3 py-1 mr-4 mt-2 mb-2 bg-orange-100 text-{#927f75} shadow-sm"
               onClick={(e) => {
                 e.preventDefault();
                 if (values.colors.length > 0) {
@@ -461,7 +461,7 @@ const ProductForm = () => {
             {/* Picture Add More */}
 
             <button
-              className="border-2 rounded-lg px-3 py-1 mr-4 mt-2 mb-2 bg-orange-200"
+              className="border-2 rounded-lg px-3 py-1 mr-4 mt-2 mb-2 bg-orange-100 text-{#927f75} shadow-sm"
               onClick={(e) => {
                 e.preventDefault();
                 setDisplayInput(!displayInput);
@@ -498,7 +498,7 @@ const ProductForm = () => {
               {rowSizeValue}
             </select>
             <button
-              className="border-2 rounded-lg px-3 py-1 mr-4 mt-2 mb-2 bg-orange-200"
+              className="border-2 rounded-lg px-3 py-1 mr-4 mt-2 mb-2 bg-orange-100 text-{#927f75} shadow-sm"
               onClick={(e) => {
                 e.preventDefault();
                 console.log('selectedSize: ' + selectedSize);
@@ -593,7 +593,7 @@ const ProductForm = () => {
             ) : null}
             <br></br>
             <button
-              className="border-2 rounded-lg px-3 py-1 mr-4 mt-2 mb-2 bg-orange-400 text-white font-bold hover:bg-orange-300
+              className="border-2 rounded-lg px-3 py-1 mr-4 mt-2 mb-2 bg-orange-200 text-{#927f75} font-bold hover:bg-orange-300 shadow-lg
             "
               type="submit"
               disabled={isSubmitting}
