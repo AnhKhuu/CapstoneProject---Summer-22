@@ -41,7 +41,9 @@ function Product({ product }) {
         <h2 className="text-center text-lg text-black font-semibold">
           Stock: {product.stock}
         </h2>
-        <h2 className="text-center text-lg text-black font-semibold">Colors: {colors}</h2>
+        <h2 className="text-center text-lg text-black font-semibold">
+          Colors: {colors}
+        </h2>
       </div>
       <div className="inline-flex w-18 h-8 bg-transparent space-x-16 rounded-lg mb-4 ml-8">
         <button

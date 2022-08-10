@@ -21,7 +21,7 @@ const Header = () => {
           className="relative"
           onClick={() => addToCartItems.length > 0 && setIsShowCart(true)}
         >
-          {location.pathname === '/shoplist' && (
+          {location.pathname !== '/checkout' ? (
             <div>
               <AiOutlineShoppingCart className="text-[24px]" />
               {addToCartItems.length > 0 && (
@@ -30,6 +30,8 @@ const Header = () => {
                 </span>
               )}
             </div>
+          ) : (
+            ''
           )}
         </div>
       </nav>

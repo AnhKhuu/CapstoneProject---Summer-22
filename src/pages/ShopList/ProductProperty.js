@@ -66,7 +66,6 @@ const ProductProperty = () => {
       productId: ID,
     },
   });
-  console.log(data);
   if (loading) return <div> Loading... </div>;
   if (error) return <div> Something went wrong </div>;
   const handleAddToCart = (product) => {
